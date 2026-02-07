@@ -1,0 +1,119 @@
+# ================================================
+# Gateway El Salvador — Docker Compose (Development)
+# ================================================
+# Start all services: docker compose up -d
+# Stop all services:  docker compose down
+# View logs:          docker compose logs -f
+
+services:
+  # ── Databases ───────────────────────────────────
+  postgres:
+    image: postgis/postgis:16-3.5
+    container_name: gateway-es-postgres
+    environment:
+      POSTGRES_DB: gateway_es
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: gateway-es-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.12
+    container_name: gateway-es-meilisearch
+    environment:
+      MEILI_ENV: development
+      MEILI_MASTER_KEY: gateway-es-dev-key
+    ports:
+      - "7700:7700"
+    volumes:
+      - meilisearch_data:/meili_data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7700/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── Backend API ─────────────────────────────────
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: ../../infra/docker/Dockerfile.api
+    container_name: gateway-es-api
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@postgres:5432/gateway_es
+      - REDIS_URL=redis://redis:6379
+      - MEILISEARCH_URL=http://meilisearch:7700
+      - MEILISEARCH_MASTER_KEY=gateway-es-dev-key
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/api:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # ── Go Services ─────────────────────────────────
+  payments:
+    build:
+      context: ./apps/services/payments
+      dockerfile: ../../../infra/docker/Dockerfile.go
+    container_name: gateway-es-payments
+    environment:
+      - PAYMENTS_SERVICE_PORT=8001
+    ports:
+      - "8001:8001"
+    depends_on:
+      - redis
+
+  bookings:
+    build:
+      context: ./apps/services/bookings
+      dockerfile: ../../../infra/docker/Dockerfile.go
+    container_name: gateway-es-bookings
+    environment:
+      - BOOKINGS_SERVICE_PORT=8002
+    ports:
+      - "8002:8002"
+    depends_on:
+      - redis
+      - postgres
+
+  pricing:
+    build:
+      context: ./apps/services/pricing
+      dockerfile: ../../../infra/docker/Dockerfile.go
+    container_name: gateway-es-pricing
+    environment:
+      - PRICING_SERVICE_PORT=8003
+    ports:
+      - "8003:8003"
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data:
+  redis_data:
+  meilisearch_data:

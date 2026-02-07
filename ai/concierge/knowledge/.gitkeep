@@ -1,0 +1,8 @@
+# Knowledge base documents directory
+# Store ES-specific knowledge documents here for RAG ingestion:
+#   - Neighborhood guides
+#   - Legal & tax information
+#   - Cultural guides
+#   - Safety statistics
+#   - Investment process documentation
+#   - Bitcoin usage guides

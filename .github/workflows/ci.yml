@@ -1,0 +1,133 @@
+# Gateway El Salvador — CI/CD Pipeline
+# Runs on every push and PR to main
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: "20"
+  PYTHON_VERSION: "3.12"
+  GO_VERSION: "1.22"
+
+jobs:
+  # ── Frontend ─────────────────────────────────
+  frontend:
+    name: Frontend (Next.js)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @gateway-es/web typecheck
+      - run: pnpm --filter @gateway-es/web lint
+      - run: pnpm --filter @gateway-es/web build
+
+  # ── Backend API ──────────────────────────────
+  backend:
+    name: Backend (FastAPI)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.5
+        env:
+          POSTGRES_DB: gateway_es_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        working-directory: apps/api
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio httpx
+
+      - name: Run tests
+        working-directory: apps/api
+        env:
+          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/gateway_es_test
+        run: pytest tests/ -v
+
+  # ── Go Services ──────────────────────────────
+  go-services:
+    name: Go Services
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [payments, bookings, pricing]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Build
+        working-directory: apps/services/${{ matrix.service }}
+        run: go build -v ./...
+
+      - name: Test
+        working-directory: apps/services/${{ matrix.service }}
+        run: go test -v ./...
+
+  # ── AI Engine ────────────────────────────────
+  ai-engine:
+    name: AI Engine (Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          pip install pytest numpy scikit-learn
+
+      - name: Run AI module tests
+        run: pytest ai/ -v --ignore=ai/tutor/models --ignore=ai/valuation/models
+
+  # ── Docker Build ─────────────────────────────
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: [frontend, backend, go-services]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build API image
+        run: docker build -f infra/docker/Dockerfile.api -t gateway-es-api:latest apps/api
+
+      - name: Build Go services
+        run: |
+          for service in payments bookings pricing; do
+            docker build -f infra/docker/Dockerfile.go -t gateway-es-$service:latest apps/services/$service
+          done

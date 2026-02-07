@@ -1,0 +1,74 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+vendor/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Build outputs
+.next/
+dist/
+build/
+out/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Testing
+coverage/
+.nyc_output/
+htmlcov/
+.pytest_cache/
+
+# Turbo
+.turbo/
+
+# Docker
+docker-compose.override.yml
+
+# Database
+*.sql.bak
+*.dump
+
+# AI Models (large files)
+ai/valuation/models/*.pt
+ai/valuation/models/*.pkl
+ai/tutor/models/*.gguf
+ai/tutor/models/*.onnx
+*.onnx
+*.gguf
+*.safetensors
+
+# Terraform
+infra/terraform/.terraform/
+infra/terraform/*.tfstate
+infra/terraform/*.tfstate.backup
+infra/terraform/*.tfvars
+
+# Secrets
+*.pem
+*.key
+*.cert

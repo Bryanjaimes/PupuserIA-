@@ -1,0 +1,44 @@
+{
+  "name": "pupuseria-gateway-es",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Gateway El Salvador — AI-powered platform for tourism, investment, and education",
+  "author": "PupuserIA Team",
+  "license": "AGPL-3.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "db:migrate": "pnpm --filter @gateway-es/database migrate",
+    "db:seed": "pnpm --filter @gateway-es/database seed",
+    "db:studio": "pnpm --filter @gateway-es/database studio",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "husky": "^9.1.0",
+    "lint-staged": "^15.3.0",
+    "prettier": "^3.4.0",
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@gateway-es/database",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "migrate": "echo 'Migrations managed via Alembic in apps/api'",
+    "seed": "echo 'Seeding not yet implemented'",
+    "studio": "echo 'DB studio not yet configured'"
+  }
+}
