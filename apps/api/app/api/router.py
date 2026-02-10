@@ -4,7 +4,7 @@ API Router — aggregates all endpoint routers.
 
 from fastapi import APIRouter
 
-from app.api.endpoints import health, properties, tours, concierge, content, foundation
+from app.api.endpoints import health, properties, tours, concierge, content, foundation, coverage
 
 api_router = APIRouter()
 
@@ -14,3 +14,4 @@ api_router.include_router(tours.router, prefix="/tours", tags=["Tours & Experien
 api_router.include_router(concierge.router, prefix="/concierge", tags=["AI Concierge"])
 api_router.include_router(content.router, prefix="/content", tags=["Content & SEO"])
 api_router.include_router(foundation.router, prefix="/foundation", tags=["Foundation Impact"])
+api_router.include_router(coverage.router, prefix="/coverage", tags=["Data Coverage & Gaps"])

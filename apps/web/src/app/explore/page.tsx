@@ -8,7 +8,7 @@ const InteractiveMap = dynamic(() => import("@/components/interactive-map"), {
   loading: () => (
     <div className="flex h-screen w-full items-center justify-center bg-sv-950">
       <div className="flex flex-col items-center gap-4">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-sv-300 border-t-gold-400" />
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-sv-300 border-t-sv-500" />
         <p className="text-sm font-medium text-white/70">Loading map…</p>
       </div>
     </div>

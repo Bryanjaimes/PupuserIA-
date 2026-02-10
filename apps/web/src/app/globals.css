@@ -1,39 +1,39 @@
 @import "tailwindcss";
 
-/* ── Gateway El Salvador — 🇸🇻 Salvadoran Design System ── */
+/* ── Gateway El Salvador — 🇸🇻 .gov Design System ── */
 
 @theme {
-  /* Salvadoran Blue — Flag cobalt to deep midnight */
-  --color-sv-50: #eef5ff;
-  --color-sv-100: #d9e8ff;
-  --color-sv-200: #bcd8ff;
-  --color-sv-300: #8ec2ff;
-  --color-sv-400: #59a1ff;
+  /* Salvadoran Blue — Official cobalt */
+  --color-sv-50: #f0f5ff;
+  --color-sv-100: #dce8ff;
+  --color-sv-200: #b8d0ff;
+  --color-sv-300: #85b0ff;
+  --color-sv-400: #4d88ff;
   --color-sv-500: #0047ab;
   --color-sv-600: #003d96;
   --color-sv-700: #00327a;
   --color-sv-800: #002660;
   --color-sv-900: #001a45;
-  --color-sv-950: #000f2b;
+  --color-sv-950: #0a0f1e;
 
-  /* Gold — Bitcoin / Salvadoran sun / prosperity */
+  /* Gold — Prosperity accent */
   --color-gold-50: #fffdf0;
   --color-gold-100: #fef9c3;
   --color-gold-200: #fef08a;
   --color-gold-300: #fde047;
-  --color-gold-400: #facc15;
-  --color-gold-500: #eab308;
-  --color-gold-600: #ca8a04;
-  --color-gold-700: #a16207;
+  --color-gold-400: #d4a017;
+  --color-gold-500: #b8860b;
+  --color-gold-600: #996d00;
+  --color-gold-700: #7a5518;
 
-  /* Impact — Foundation, education, growth */
+  /* Impact — Growth green */
   --color-impact-400: #4ade80;
   --color-impact-500: #22c55e;
   --color-impact-600: #16a34a;
 
   /* Fonts */
   --font-sans: "Inter", "system-ui", sans-serif;
-  --font-display: "Cal Sans", "Inter", sans-serif;
+  --font-serif: "Playfair Display", "Georgia", "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 }
 
@@ -41,78 +41,91 @@
 
 html {
   scroll-behavior: smooth;
-  cursor: url('/pupusa.svg') 16 16, auto;
 }
 
 body {
-  @apply bg-sv-50 text-sv-950 antialiased;
+  @apply bg-white text-sv-950 antialiased;
   font-feature-settings: "cv11", "ss01";
 }
 
 a, button, [role="button"], input[type="submit"] {
-  cursor: url('/pupusa.svg') 16 16, pointer;
+  cursor: pointer;
 }
 
 /* ── Selection ───────────────────────────────── */
 
 ::selection {
-  @apply bg-gold-400/30 text-sv-900;
+  @apply bg-sv-500/20 text-sv-900;
 }
 
-/* ── Glass Morphism Utilities ────────────────── */
+/* ── .gov Style Utilities ────────────────────── */
 
+.gov-section {
+  @apply py-20 lg:py-28;
+}
+
+.gov-section-alt {
+  @apply py-20 lg:py-28;
+  background: #f8f9fc;
+}
+
+.gov-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.gov-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 71, 171, 0.08);
+  border-color: #cbd5e1;
+}
+
+.gov-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #e5e7eb, transparent);
+}
+
+.gov-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+/* Glass utilities kept for backward compat — simplified */
 .glass {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: white;
+  border: 1px solid #e5e7eb;
 }
 
 .glass-dark {
-  background: rgba(0, 15, 43, 0.65);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: #0a0f1e;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.glass-blue {
-  background: rgba(0, 71, 171, 0.08);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  border: 1px solid rgba(0, 71, 171, 0.12);
-}
-
 .glass-gold {
-  background: rgba(234, 179, 8, 0.06);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  border: 1px solid rgba(234, 179, 8, 0.15);
+  background: #fffdf0;
+  border: 1px solid #fde047;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow:
-    0 4px 24px rgba(0, 71, 171, 0.04),
-    0 1px 3px rgba(0, 0, 0, 0.03);
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-/* ── Smooth animations ───────────────────────── */
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
+/* ── Animations ──────────────────────────────── */
 
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
 }
 
 .animate-shimmer {
@@ -133,34 +146,24 @@ a, button, [role="button"], input[type="submit"] {
 }
 
 .mapboxgl-ctrl-group {
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3) !important;
-  border: none !important;
-  background: rgba(0, 15, 43, 0.65) !important;
-  backdrop-filter: blur(20px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+  border: 1px solid #e5e7eb !important;
+  background: white !important;
 }
 
 .mapboxgl-ctrl-group button {
   background: transparent !important;
   border: none !important;
-  color: white;
 }
 
 .mapboxgl-ctrl-group button + button {
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-top: 1px solid #e5e7eb !important;
 }
 
 .mapboxgl-ctrl-group button:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-}
-
-.mapboxgl-ctrl-icon {
-  filter: invert(1);
-}
-
-.mapboxgl-user-location-dot {
-  box-shadow: 0 0 12px rgba(0, 71, 171, 0.6);
+  background: #f0f5ff !important;
 }
 
 .map-marker {

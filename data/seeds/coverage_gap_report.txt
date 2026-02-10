@@ -1,0 +1,148 @@
+======================================================================
+EL SALVADOR — DATA COVERAGE GAP ANALYSIS
+======================================================================
+
+Total Departments: 14
+Total Municipios:  262
+Coverage Categories: 8
+Total Gap Records: 2096
+
+──────────────────────────────────────────────────────────────────────
+PRIORITY BREAKDOWN (by population)
+──────────────────────────────────────────────────────────────────────
+  CRITICAL  : 32 municipios
+  HIGH      : 46 municipios
+  MEDIUM    : 61 municipios
+  LOW       : 123 municipios
+
+──────────────────────────────────────────────────────────────────────
+CRITICAL GAPS — NEEDS IMMEDIATE FIELD RESEARCH
+(Municipios with 50,000+ population, zero property data)
+──────────────────────────────────────────────────────────────────────
+  🔴 San Salvador                   | San Salvador         | Pop:    570,000 | Coords: (13.698, -89.191)
+  🔴 Soyapango                      | San Salvador         | Pop:    290,000 | Coords: (13.710, -89.138)
+  🔴 Santa Ana                      | Santa Ana            | Pop:    280,000 | Coords: (13.994, -89.560)
+  🔴 San Miguel                     | San Miguel           | Pop:    270,000 | Coords: (13.480, -88.177)
+  🔴 Apopa                          | San Salvador         | Pop:    165,000 | Coords: (13.807, -89.181)
+  🔴 Mejicanos                      | San Salvador         | Pop:    165,000 | Coords: (13.729, -89.213)
+  🔴 Santa Tecla                    | La Libertad          | Pop:    164,000 | Coords: (13.677, -89.290)
+  🔴 Ciudad Delgado                 | San Salvador         | Pop:    140,000 | Coords: (13.726, -89.170)
+  🔴 Ilopango                       | San Salvador         | Pop:    130,000 | Coords: (13.695, -89.108)
+  🔴 Tonacatepeque                  | San Salvador         | Pop:    115,000 | Coords: (13.779, -89.112)
+  🔴 Ahuachapán                     | Ahuachapán           | Pop:    110,511 | Coords: (13.921, -89.845)
+  🔴 Colón                          | La Libertad          | Pop:    110,000 | Coords: (13.724, -89.369)
+  🔴 San Martín                     | San Salvador         | Pop:    105,000 | Coords: (13.787, -89.057)
+  🔴 Sonsonate                      | Sonsonate            | Pop:     85,600 | Coords: (13.719, -89.724)
+  🔴 Chalchuapa                     | Santa Ana            | Pop:     85,398 | Coords: (13.987, -89.681)
+  🔴 Opico                          | La Libertad          | Pop:     82,000 | Coords: (13.862, -89.390)
+  🔴 San Juan Opico                 | La Libertad          | Pop:     78,000 | Coords: (13.876, -89.357)
+  🔴 Cuscatancingo                  | San Salvador         | Pop:     78,000 | Coords: (13.730, -89.183)
+  🔴 Usulután                       | Usulután             | Pop:     77,000 | Coords: (13.441, -88.440)
+  🔴 Zacatecoluca                   | La Paz               | Pop:     75,000 | Coords: (13.517, -88.870)
+  🔴 Izalco                         | Sonsonate            | Pop:     72,700 | Coords: (13.745, -89.673)
+  🔴 San Marcos                     | San Salvador         | Pop:     72,000 | Coords: (13.658, -89.183)
+  🔴 Ciudad Arce                    | La Libertad          | Pop:     70,500 | Coords: (13.838, -89.443)
+  🔴 Ilobasco                       | Cabañas              | Pop:     67,000 | Coords: (13.842, -88.845)
+  🔴 Metapán                        | Santa Ana            | Pop:     65,000 | Coords: (14.333, -89.450)
+  🔴 Quezaltepeque                  | La Libertad          | Pop:     65,000 | Coords: (13.831, -89.272)
+  🔴 Acajutla                       | Sonsonate            | Pop:     56,800 | Coords: (13.593, -89.827)
+  🔴 San Pedro Perulapán            | Cuscatlán            | Pop:     55,000 | Coords: (13.766, -88.940)
+  🔴 San Vicente                    | San Vicente          | Pop:     55,000 | Coords: (13.641, -88.784)
+  🔴 Nahuizalco                     | Sonsonate            | Pop:     52,000 | Coords: (13.774, -89.737)
+  🔴 Cojutepeque                    | Cuscatlán            | Pop:     52,000 | Coords: (13.717, -88.935)
+  🔴 Jiquilisco                     | Usulután             | Pop:     52,000 | Coords: (13.321, -88.573)
+
+──────────────────────────────────────────────────────────────────────
+KNOWN DATA DESERT ZONES
+(Areas where imagery, listings, and info are hardest to find)
+──────────────────────────────────────────────────────────────────────
+
+  📍 Morazán — Northern Mountains
+     Municipios: Perquín, Arambala, Meanguera, Joateca, Torola, San Fernando (MO), Jocoaitique
+     Notes: Remote mountainous terrain, Ruta de Paz area. Former conflict zone. Very few real estate listings or street imagery. NEEDS: local contacts, drone photography, community engagement.
+
+  📍 Chalatenango — Northern Border
+     Municipios: Citalá, San Ignacio, La Palma, San Fernando, Dulce Nombre de María, Arcatao, Las Vueltas, Las Flores
+     Notes: Rural highlands near Honduras border. Limited internet. Some ecotourism (La Palma artisan town). NEEDS: road condition surveys, property value baselines, local market interviews.
+
+  📍 Cabañas — Interior
+     Municipios: Cinquera, Victoria, Dolores, Guacotecti, San Isidro (CB), Tejutepeque
+     Notes: Least-visited department. Former guerrilla territory. Cinquera forest reserve. Very few online listings. NEEDS: municipal office data, local broker contacts, environmental surveys.
+
+  📍 La Unión — Eastern Coast
+     Municipios: Meanguera del Golfo, Intipucá, Conchagua, Bolívar, Nueva Esparta
+     Notes: Islands in Gulf of Fonseca (Meanguera del Golfo). Intipucá = remittance town. Conchagua volcano area. NEEDS: coastal property surveys, tourism asset inventory, port development data.
+
+  📍 Northern Usulután / San Miguel
+     Municipios: Carolina, Nuevo Edén de San Juan, San Luis de la Reina, San Antonio, Sesori
+     Notes: Remote eastern highlands. Very limited road access. Sparse population. Almost zero online real estate presence. NEEDS: community-level data, basic mapping, school inventories.
+
+  📍 Sonsonate — Indigenous Areas
+     Municipios: Cuisnahuat, Santa Isabel Ishuatán, Santo Domingo de Guzmán, Santa Catarina Masahuat
+     Notes: Indigenous Nahua-Pipil communities. Rich cultural heritage but limited digital presence. NEEDS: culturally sensitive documentation, community permissions, bilingual (Náhuat/Spanish) data collection.
+
+──────────────────────────────────────────────────────────────────────
+HIGH-VALUE TARGETS — BEST DATA AVAILABLE
+(Start scrapers here for quickest results)
+──────────────────────────────────────────────────────────────────────
+
+  🟢 San Salvador Metro
+     Municipios: San Salvador, Soyapango, Mejicanos, Apopa, Ilopango, Ciudad Delgado, Santa Tecla, Antiguo Cuscatlán
+     Notes: Highest listing density on Encuentra24 / OLX. Many real estate agents online. Google Street View coverage good.
+
+  🟢 Beach & Tourism Corridor
+     Municipios: La Libertad, Tamanique, El Tunco area (Tamanique), Acajutla, San Luis La Herradura
+     Notes: Active vacation rental market. Airbnb/VRBO presence. High foreigner interest.
+
+  🟢 Eastern Urban
+     Municipios: San Miguel, Santa Ana, Usulután
+     Notes: Second/third tier cities with active property markets. Some online listings.
+
+  🟢 Coffee Route
+     Municipios: Apaneca, Juayúa, Concepción de Ataco, Salcoatitán
+     Notes: Ruta de las Flores tourism zone. Growing boutique hotel / B&B market.
+
+──────────────────────────────────────────────────────────────────────
+DEPARTMENT SUMMARY
+──────────────────────────────────────────────────────────────────────
+  Ahuachapán                |  12 municipios | Pop:    339,081 | Area:  1,239.6 km²
+  Santa Ana                 |  13 municipios | Pop:    588,498 | Area:  2,023.2 km²
+  Sonsonate                 |  16 municipios | Pop:    474,400 | Area:  1,225.8 km²
+  Chalatenango              |  33 municipios | Pop:    193,800 | Area:  2,016.6 km²
+  La Libertad               |  22 municipios | Pop:    831,300 | Area:  1,652.9 km²
+  San Salvador              |  19 municipios | Pop:  2,084,000 | Area:    886.2 km²
+  Cuscatlán                 |  16 municipios | Pop:    258,200 | Area:    756.2 km²
+  La Paz                    |  22 municipios | Pop:    369,600 | Area:  1,223.6 km²
+  Cabañas                   |   9 municipios | Pop:    168,300 | Area:  1,103.5 km²
+  San Vicente               |  13 municipios | Pop:    183,900 | Area:  1,184.0 km²
+  Usulután                  |  23 municipios | Pop:    354,000 | Area:  2,130.4 km²
+  San Miguel                |  20 municipios | Pop:    496,500 | Area:  2,077.1 km²
+  Morazán                   |  26 municipios | Pop:    190,300 | Area:  1,447.4 km²
+  La Unión                  |  18 municipios | Pop:    246,900 | Area:  2,074.3 km²
+
+──────────────────────────────────────────────────────────────────────
+NEXT STEPS FOR FIELD RESEARCH
+──────────────────────────────────────────────────────────────────────
+
+  1. HIGH-VALUE SCRAPING FIRST: Run scrapers on San Salvador metro,
+     beach corridor, and Ruta de las Flores. This gives us quickest ROI.
+
+  2. MUNICIPAL OFFICE PARTNERSHIPS: Contact alcaldías in Cabañas,
+     northern Morazán, and Chalatenango for cadastral records,
+     property tax data, and local market info.
+
+  3. DRONE PHOTOGRAPHY CAMPAIGN: Focus on data deserts — northern
+     Morazán (Perquín area), northern Chalatenango (La Palma area),
+     and Cabañas interior. Budget: ~$50/municipio for local operators.
+
+  4. COMMUNITY RESEARCHER NETWORK: Hire 3-5 local researchers
+     ($300-500/month) to collect property prices, take photos,
+     and document infrastructure in remote municipios.
+
+  5. SATELLITE IMAGERY: Use Sentinel-2 or Planet Labs for development
+     detection in areas with zero street-level imagery. Free tier
+     available for educational/NGO use.
+
+  6. PARTNER WITH UNIVERSITIES: UES, UCA, and UTEC have sociology/
+     geography departments that could assist with field data collection
+     as part of student research projects.

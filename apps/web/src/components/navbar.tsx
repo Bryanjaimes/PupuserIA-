@@ -3,19 +3,21 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu, X, Bitcoin } from "lucide-react";
+import { useLanguage } from "@/context/language-context";
 
-const navLinks = [
-  { href: "/explore", label: "Explore" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/marketplace", label: "Marketplace" },
-  { href: "/invest", label: "Invest" },
-  { href: "/foundation", label: "Foundation" },
-  { href: "/blog", label: "Blog" },
+const navLinkKeys = [
+  { href: "/explore", labelKey: "nav.explore" },
+  { href: "/dashboard", labelKey: "nav.dashboard" },
+  { href: "/marketplace", labelKey: "nav.marketplace" },
+  { href: "/invest", labelKey: "nav.invest" },
+  { href: "/foundation", labelKey: "nav.foundation" },
+  { href: "/blog", labelKey: "nav.blog" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -25,69 +27,64 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ease-out ${
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "glass border-b border-white/30 shadow-lg shadow-sv-500/5"
-          : "bg-transparent"
+          ? "border-b border-gray-200 bg-white shadow-sm"
+          : "bg-white/95 backdrop-blur-sm"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
+      {/* Top gov bar */}
+      <div className="border-b border-gray-100 bg-sv-950">
+        <div className="mx-auto flex max-w-7xl items-center px-6 py-1.5">
+          <span className="text-[11px] font-medium tracking-wide text-white/60">
+            🇸🇻 {t("nav.govBar")}
+          </span>
+        </div>
+      </div>
+
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
         {/* Logo */}
-        <Link href="/" className="group flex items-center gap-3 font-bold">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sv-500 to-sv-700 text-lg text-white shadow-lg shadow-sv-500/25 transition-transform duration-300 group-hover:scale-105">
+        <Link href="/" className="group flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-sv-500 text-base text-white">
             🇸🇻
           </span>
-          <div className="hidden sm:block">
-            <span className={`text-lg font-extrabold transition-colors duration-500 ${scrolled ? "text-sv-900" : "text-white"}`}>Gateway</span>
-            <span className="ml-1 text-lg font-extrabold text-gold-500">ES</span>
+          <div>
+            <span className="text-lg font-bold tracking-tight text-sv-900">Gateway</span>
+            <span className="ml-1 text-lg font-bold text-gold-500">ES</span>
           </div>
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden items-center gap-0.5 md:flex">
-          {navLinks.map((link) => (
+        <div className="hidden items-center gap-1 md:flex">
+          {navLinkKeys.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`relative rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
-                scrolled
-                  ? "text-sv-700 hover:bg-sv-500/8 hover:text-sv-500"
-                  : "text-white/70 hover:bg-white/10 hover:text-white"
-              }`}
+              className="rounded-md px-3.5 py-2 text-sm font-medium text-sv-700 transition-colors hover:bg-sv-50 hover:text-sv-500"
             >
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           ))}
         </div>
 
         {/* CTA */}
         <div className="hidden items-center gap-3 md:flex">
-          <div className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-500 ${
-            scrolled
-              ? "glass-gold text-gold-700"
-              : "border border-gold-400/20 bg-gold-400/10 text-gold-300 backdrop-blur-sm"
-          }`}>
+          <div className="flex items-center gap-1.5 rounded-md border border-gold-400/30 bg-gold-50 px-3 py-1.5 text-xs font-semibold text-gold-600">
             <Bitcoin size={13} />
-            <span>BTC Ready</span>
+            <span>{t("nav.btcReady")}</span>
           </div>
           <Link
             href="#waitlist"
-            className={`rounded-xl px-6 py-2.5 text-sm font-semibold transition-all duration-300 ${
-              scrolled
-                ? "bg-gradient-to-r from-sv-500 to-sv-600 text-white shadow-lg shadow-sv-500/20 hover:shadow-xl hover:shadow-sv-500/30 hover:brightness-110"
-                : "bg-white/10 text-white border border-white/15 backdrop-blur-sm hover:bg-white/20"
-            }`}
+            className="rounded-md bg-sv-500 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-sv-600"
           >
-            Get Early Access
+            {t("nav.earlyAccess")}
           </Link>
         </div>
 
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className={`rounded-xl p-2.5 transition md:hidden ${
-            scrolled ? "text-sv-700 hover:bg-sv-500/8" : "text-white/70 hover:bg-white/10"
-          }`}
+          className="rounded-md p-2 text-sv-700 transition hover:bg-sv-50 md:hidden"
           aria-label="Toggle menu"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
@@ -96,44 +93,34 @@ export function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`overflow-hidden transition-all duration-500 ease-out md:hidden ${
+        className={`overflow-hidden transition-all duration-300 md:hidden ${
           open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`border-t px-6 py-5 ${
-          scrolled
-            ? "glass border-white/20"
-            : "bg-sv-950/80 border-white/10 backdrop-blur-xl"
-        }`}>
+        <div className="border-t border-gray-100 bg-white px-6 py-4">
           <div className="space-y-1">
-            {navLinks.map((link) => (
+            {navLinkKeys.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                  scrolled
-                    ? "text-sv-800 hover:bg-sv-500/8 hover:text-sv-500"
-                    : "text-white/70 hover:bg-white/10 hover:text-white"
-                }`}
+                className="block rounded-md px-3.5 py-2.5 text-sm font-medium text-sv-700 transition-colors hover:bg-sv-50 hover:text-sv-500"
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             ))}
           </div>
           <div className="mt-4 flex flex-col gap-2">
-            <div className={`flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-medium ${
-              scrolled ? "glass-gold text-gold-700" : "border border-gold-400/20 bg-gold-400/10 text-gold-300"
-            }`}>
+            <div className="flex items-center justify-center gap-1.5 rounded-md border border-gold-400/30 bg-gold-50 px-3 py-2 text-xs font-semibold text-gold-600">
               <Bitcoin size={13} />
-              <span>Bitcoin Ready</span>
+              <span>{t("nav.bitcoinReady")}</span>
             </div>
             <Link
               href="#waitlist"
               onClick={() => setOpen(false)}
-              className="block rounded-xl bg-gradient-to-r from-sv-500 to-sv-600 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-sv-500/20"
+              className="block rounded-md bg-sv-500 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-sv-600"
             >
-              Get Early Access
+              {t("nav.earlyAccess")}
             </Link>
           </div>
         </div>

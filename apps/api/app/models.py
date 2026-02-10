@@ -16,6 +16,8 @@ from sqlalchemy import (
     Text,
     Boolean,
     Enum as SQLEnum,
+    Index,
+    UniqueConstraint,
 )
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import DeclarativeBase, relationship
@@ -26,6 +28,114 @@ class Base(DeclarativeBase):
     """Base class for all models."""
 
     pass
+
+
+# ── Administrative Divisions ─────────────────────────
+
+
+class Department(Base):
+    """One of El Salvador's 14 departments."""
+
+    __tablename__ = "departments"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), unique=True, nullable=False)
+    name_es = Column(String(100), unique=True, nullable=False)
+    capital = Column(String(100))
+    area_km2 = Column(Float)
+    population = Column(Integer)
+    population_year = Column(Integer)
+    iso_code = Column(String(10))
+    # GeoJSON polygon for the department boundary
+    boundary = Column(Geometry("MULTIPOLYGON", srid=4326))
+    centroid_lat = Column(Float)
+    centroid_lng = Column(Float)
+
+    municipios = relationship("Municipio", back_populates="department")
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Municipio(Base):
+    """A municipio (municipality) within a department. 262 total."""
+
+    __tablename__ = "municipios"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
+    name_es = Column(String(100), nullable=False)
+    department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
+    population = Column(Integer)
+    population_year = Column(Integer)
+    area_km2 = Column(Float)
+    elevation_m = Column(Integer)
+    # Centroid for geocoding
+    centroid_lat = Column(Float)
+    centroid_lng = Column(Float)
+    boundary = Column(Geometry("MULTIPOLYGON", srid=4326))
+
+    department = relationship("Department", back_populates="municipios")
+    properties = relationship("Property", back_populates="municipio_rel")
+    coverage_gaps = relationship("DataCoverageGap", back_populates="municipio_rel")
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    __table_args__ = (
+        UniqueConstraint("name", "department_id", name="uq_municipio_dept"),
+    )
+
+
+# ── Data Coverage Tracking ───────────────────────────
+
+
+class DataCoverageGap(Base):
+    """
+    Tracks data coverage gaps by municipio and category.
+    Used to prioritize boots-on-the-ground research.
+    """
+
+    __tablename__ = "data_coverage_gaps"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    municipio_id = Column(Integer, ForeignKey("municipios.id"), nullable=False)
+
+    # What kind of gap
+    category = Column(
+        String(50), nullable=False
+    )  # property_listings, images, pricing, infrastructure, tourism, safety
+
+    # Severity: 0.0 = no data, 1.0 = fully covered
+    coverage_score = Column(Float, nullable=False, default=0.0)
+
+    # Gap details
+    total_listings = Column(Integer, default=0)
+    listings_with_price = Column(Integer, default=0)
+    listings_with_images = Column(Integer, default=0)
+    listings_with_coordinates = Column(Integer, default=0)
+    avg_images_per_listing = Column(Float, default=0.0)
+
+    # Research priority: critical, high, medium, low
+    priority = Column(String(20), default="medium")
+
+    # Field research status
+    needs_field_research = Column(Boolean, default=False)
+    field_research_status = Column(
+        String(50), default="not_started"
+    )  # not_started, planned, in_progress, completed
+    field_research_notes = Column(Text)
+    field_researcher = Column(String(100))
+    field_research_date = Column(DateTime)
+
+    # Timestamps
+    last_analyzed = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    municipio_rel = relationship("Municipio", back_populates="coverage_gaps")
+
+    __table_args__ = (
+        UniqueConstraint("municipio_id", "category", name="uq_gap_municipio_cat"),
+        Index("ix_gap_priority", "priority"),
+        Index("ix_gap_score", "coverage_score"),
+    )
 
 
 # ── Property Models ──────────────────────────────────
@@ -44,6 +154,7 @@ class Property(Base):
     property_type = Column(String(50), nullable=False)  # house, apartment, land, commercial
     department = Column(String(100), nullable=False)
     municipio = Column(String(100), nullable=False)
+    municipio_id = Column(Integer, ForeignKey("municipios.id"))
     canton = Column(String(100))
     address = Column(Text)
 
@@ -83,6 +194,7 @@ class Property(Base):
 
     # Relationships
     valuations = relationship("PropertyValuation", back_populates="property")
+    municipio_rel = relationship("Municipio", back_populates="properties")
 
 
 class PropertyValuation(Base):
