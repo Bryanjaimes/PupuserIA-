@@ -58,5 +58,13 @@ class Settings(BaseSettings):
     aws_region: str = "us-east-1"
     s3_bucket: str = "gateway-es-assets"
 
+    # ── Scraper ──
+    scraper_requests_per_second: float = 0.3
+    scraper_max_pages: int = 50
+    scraper_fetch_details: bool = True
+    scraper_headless: bool = True
+    scraper_output_dir: str = "data/scraper_output"
+    scraper_stale_days: int = 30
+
 
 settings = Settings()
