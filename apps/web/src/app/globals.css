@@ -174,3 +174,31 @@ a, button, [role="button"], input[type="submit"] {
 .map-marker:hover {
   z-index: 10 !important;
 }
+
+/* ── Page entrance animation ── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Leaflet marker override — allow auto-sizing DivIcons */
+.leaflet-marker-icon {
+  background: none !important;
+  border: none !important;
+}
+
+/* Keep Leaflet z-index below the fixed navbar (z-50 = 50) */
+.leaflet-container {
+  z-index: 0 !important;
+}
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: auto !important;
+}

@@ -7,7 +7,9 @@ import { useEffect, useState, useCallback } from "react";
    from the FastAPI backend with filtering support.
    ═══════════════════════════════════════════════════════ */
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+// Use local Next.js API routes (backed by static JSON from scraped data)
+// Falls back to external FastAPI if NEXT_PUBLIC_API_URL is set
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
 
 // ── Types ────────────────────────────────────────────
 
@@ -90,7 +92,7 @@ export function useProperties(params: PropertySearchParams = {}) {
       searchParams.set("page", (params.page || 1).toString());
       searchParams.set("page_size", (params.page_size || 20).toString());
 
-      const res = await fetch(`${API_BASE}/api/v1/properties/?${searchParams}`);
+      const res = await fetch(`${API_BASE}/api/properties?${searchParams}`);
       if (!res.ok) throw new Error(`API error: ${res.status}`);
       const data = await res.json();
       setProperties(data.results);
@@ -132,7 +134,7 @@ export function usePropertyStats() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/v1/properties/stats`);
+        const res = await fetch(`${API_BASE}/api/properties/stats`);
         if (!res.ok) throw new Error(`API error: ${res.status}`);
         setStats(await res.json());
       } catch (err) {
@@ -155,7 +157,7 @@ export function useFeaturedProperties(limit = 8) {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/v1/properties/featured?limit=${limit}`);
+        const res = await fetch(`${API_BASE}/api/properties/featured?limit=${limit}`);
         if (!res.ok) throw new Error(`API error: ${res.status}`);
         setFeatured(await res.json());
       } catch (err) {

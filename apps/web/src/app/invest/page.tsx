@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { TrendingUp, BarChart3, Calendar, Bitcoin, ArrowRight } from "lucide-react";
+import { TrendingUp, BarChart3, Calendar, Bitcoin } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
 
 export default function InvestPage() {
@@ -28,20 +28,6 @@ export default function InvestPage() {
         <p className="mb-12 max-w-2xl text-lg text-sv-700/50">
           {t("investPage.desc")}
         </p>
-
-        {/* Browse Properties CTA */}
-        <Link
-          href="/invest/properties"
-          className="mb-10 flex items-center justify-between rounded-2xl bg-gradient-to-r from-sv-900 to-sv-800 p-8 text-white shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5"
-        >
-          <div>
-            <h2 className="mb-1 text-2xl font-extrabold">🏠 {t("investPage.search.title")}</h2>
-            <p className="text-sm text-white/70">{t("investPage.search.desc")}</p>
-          </div>
-          <div className="flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur">
-            {t("investPage.viewProperties")} <ArrowRight className="h-4 w-4" />
-          </div>
-        </Link>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((card) => (
