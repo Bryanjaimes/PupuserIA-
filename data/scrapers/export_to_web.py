@@ -178,27 +178,43 @@ def geocode(record: dict) -> tuple[float, float, bool]:
 
 # ── Main export ──────────────────────────────────────────────
 
-jsonl = Path(__file__).parent / "data" / "scraper_output" / "realtor_merged_all.jsonl"
+scraper_dir = Path(__file__).parent / "data" / "scraper_output"
 out = Path(__file__).parent / ".." / ".." / "apps" / "web" / "public" / "data" / "properties.json"
 out.parent.mkdir(parents=True, exist_ok=True)
 
+# Discover all JSONL source files
+SOURCE_FILES = [
+    # Primary: realtor merged data
+    scraper_dir / "realtor_merged_all.jsonl",
+    # CSE pipeline files: glob for any encuentra24_cse_*.jsonl
+]
+
+# Add any CSE output files
+cse_files = sorted(scraper_dir.glob("encuentra24_cse_*.jsonl"))
+SOURCE_FILES.extend(cse_files)
+
 random.seed(42)  # Reproducible jitter
 
+seen_urls: set[str] = set()  # Dedup across sources
 properties = []
 exact_coords = 0
 approx_coords = 0
+source_counts: dict[str, int] = {}
 
-for line in jsonl.read_text(encoding="utf-8").strip().split("\n"):
-    r = json.loads(line)
+
+def record_to_property(r: dict) -> dict | None:
+    """Convert a raw JSONL record to a frontend property dict."""
+    # Dedup by source URL
+    url = r.get("source_url", "")
+    if url in seen_urls:
+        return None
+    if url:
+        seen_urls.add(url)
+
     imgs = r.get("images", [])
-
     lat, lng, is_exact = geocode(r)
-    if is_exact:
-        exact_coords += 1
-    else:
-        approx_coords += 1
 
-    p = {
+    return {
         "id": r.get("content_hash", str(uuid.uuid4())[:8]),
         "title": r.get("title", ""),
         "title_es": (r.get("description_es", "") or "")[:80] or r.get("title", ""),
@@ -216,21 +232,47 @@ for line in jsonl.read_text(encoding="utf-8").strip().split("\n"):
         "coords_exact": is_exact,
         "thumbnail_url": imgs[0] if imgs else None,
         "images": imgs[:8],
-        "is_featured": (r.get("price_usd") or 0) > 200000 and bool(r.get("description")),
+        "is_featured": (r.get("price_usd") or 0) > 200000 and bool(
+            r.get("description") or r.get("description_es")
+        ),
         "neighborhood_score": None,
         "features": r.get("features", []),
         "description": r.get("description", ""),
         "description_es": r.get("description_es", ""),
-        "source": r.get("source", "realtor_intl"),
-        "source_url": r.get("source_url", ""),
+        "source": r.get("source", "unknown"),
+        "source_url": url,
         "listing_date": r.get("listing_date", ""),
         "address": r.get("address", ""),
     }
-    properties.append(p)
+
+
+for src_file in SOURCE_FILES:
+    if not src_file.exists():
+        continue
+    print(f"Reading {src_file.name}...")
+    for line in src_file.read_text(encoding="utf-8").strip().split("\n"):
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        p = record_to_property(r)
+        if p is None:
+            continue
+
+        if p["coords_exact"]:
+            exact_coords += 1
+        else:
+            approx_coords += 1
+
+        source = p["source"]
+        source_counts[source] = source_counts.get(source, 0) + 1
+        properties.append(p)
 
 out.write_text(json.dumps(properties, ensure_ascii=False), encoding="utf-8")
-print(f"Wrote {len(properties)} properties to {out.resolve()}")
+print(f"\nWrote {len(properties)} properties to {out.resolve()}")
 print(f"Size: {out.stat().st_size / 1024:.0f} KB")
 print(f"Coordinates: {exact_coords} exact, {approx_coords} estimated (centroid + jitter)")
+print(f"Sources:")
+for src, count in sorted(source_counts.items(), key=lambda x: -x[1]):
+    print(f"  {src}: {count}")
 featured = sum(1 for p in properties if p["is_featured"])
 print(f"Featured: {featured}")

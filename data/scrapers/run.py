@@ -153,6 +153,79 @@ async def run_encuentra24(args) -> None:
     logger.info("\nDone!")
 
 
+async def run_cse(args) -> None:
+    """Run the Encuentra24 CSE two-layer pipeline."""
+    from encuentra24_cse import Encuentra24CSEScraper
+
+    scraper = Encuentra24CSEScraper(
+        api_key=args.api_key,
+        cse_id=args.cse_id,
+        max_queries=args.max_queries,
+        max_enrichments=args.max_enrich,
+        enrich=args.max_enrich > 0,
+    )
+
+    logger.info("=" * 60)
+    logger.info("Encuentra24 — CSE Two-Layer Pipeline")
+    logger.info("=" * 60)
+    logger.info(f"  Department:      {args.department or 'ALL'}")
+    logger.info(f"  CSE queries:     {args.max_queries}")
+    logger.info(f"  Enrich up to:    {args.max_enrich}")
+    logger.info(f"  Output dir:      {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="encuentra24",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 25 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    # Save results to JSONL
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        dept_label = args.department.replace(" ", "_") if args.department else "all"
+        filepath = output_dir / f"encuentra24_cse_{dept_label}_{timestamp}.jsonl"
+
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    # Ingest into database
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+
+            logger.info("\nUpdating coverage scores...")
+            await ingester.update_coverage_scores()
+
+    logger.info("\nDone!")
+
+
 async def run_realtor(args) -> None:
     """Run the Realtor.com International scraper."""
     from realtor_intl import RealtorInternationalScraper
@@ -378,6 +451,20 @@ Examples:
         help="Output directory for JSONL files",
     )
 
+    # ── cse ──
+    cse_parser = subparsers.add_parser("cse", help="Encuentra24 via Google CSE two-layer pipeline")
+    cse_parser.add_argument("--department", "-d", help="Filter by department name")
+    cse_parser.add_argument("--api-key", help="Google CSE API key (or GOOGLE_CSE_API_KEY env)")
+    cse_parser.add_argument("--cse-id", help="Google CSE ID (or GOOGLE_CSE_ID env)")
+    cse_parser.add_argument("--max-queries", type=int, default=20, help="Max CSE search queries (default: 20)")
+    cse_parser.add_argument("--max-enrich", type=int, default=0, help="Max listings to enrich (default: 0 = skip)")
+    cse_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    cse_parser.add_argument(
+        "--output", "-o",
+        default="data/scraper_output",
+        help="Output directory for JSONL files",
+    )
+
     # ── ingest ──
     ing_parser = subparsers.add_parser("ingest", help="Ingest from JSONL file")
     ing_parser.add_argument("--file", "-f", required=True, help="JSONL file path")
@@ -403,6 +490,8 @@ Examples:
         asyncio.run(run_realtor(args))
     elif args.command == "encuentra24":
         asyncio.run(run_encuentra24(args))
+    elif args.command == "cse":
+        asyncio.run(run_cse(args))
     elif args.command == "ingest":
         asyncio.run(run_ingest(args))
     elif args.command == "stats":
