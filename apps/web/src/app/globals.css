@@ -175,6 +175,115 @@ a, button, [role="button"], input[type="submit"] {
   z-index: 10 !important;
 }
 
+/* ── Equation Display ─────────────────────── */
+
+.equation-hero {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+  .equation-hero {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .equation-hero {
+    font-size: 5rem;
+  }
+}
+
+.equation-variable {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 8px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.equation-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.equation-card:hover {
+  box-shadow: 0 8px 30px rgba(0, 71, 171, 0.08);
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+}
+
+.sensitivity-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.sensitivity-table thead {
+  background: #0a0f1e;
+}
+
+.sensitivity-table thead th {
+  padding: 0.875rem 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: left;
+}
+
+.sensitivity-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.15s ease;
+}
+
+.sensitivity-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.sensitivity-table tbody tr:hover {
+  background: #f0f5ff;
+}
+
+.sensitivity-table td {
+  padding: 1rem 1.25rem;
+  font-size: 0.9375rem;
+}
+
+.sensitivity-table td:first-child {
+  font-weight: 600;
+  color: #0047ab;
+}
+
+.sensitivity-table td:last-child {
+  font-weight: 700;
+  color: #0a0f1e;
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-count-up {
+  animation: countUp 0.6s ease-out forwards;
+}
+
 /* ── Page entrance animation ── */
 @keyframes fadeIn {
   from {
