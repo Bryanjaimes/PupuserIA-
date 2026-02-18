@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Bitcoin, ChevronRight } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 interface BottomCtaProps {
   totalMetrics: number;
@@ -11,7 +11,7 @@ interface BottomCtaProps {
 }
 
 export function BottomCta({ totalMetrics, totalLive, totalStatic }: BottomCtaProps) {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <>

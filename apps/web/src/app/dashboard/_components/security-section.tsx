@@ -1,8 +1,8 @@
 import { Lock } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 export function SecuritySection() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <section className="border-b border-gray-200 bg-[#f8f9fc] py-12 lg:py-16" id="security-highlight">

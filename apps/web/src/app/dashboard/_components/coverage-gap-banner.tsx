@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 /**
  * A prominent banner on the main dashboard linking to the
  * full Coverage Gap Analysis page.
  */
 export function CoverageGapBanner() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <section className="py-12 bg-gradient-to-r from-red-50 via-orange-50 to-yellow-50">

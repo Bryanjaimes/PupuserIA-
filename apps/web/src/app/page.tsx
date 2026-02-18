@@ -11,7 +11,7 @@ import {
   Heart,
   Zap,
 } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 const pillarKeys = [
   {
@@ -58,7 +58,7 @@ const marketData = [
 ];
 
 export default function HomePage() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <main>
@@ -178,7 +178,7 @@ export default function HomePage() {
                 <div className="equation-variable bg-sv-100 text-sv-600">O</div>
                 <div>
                   <div className="text-sm font-bold text-sv-900">${"13.6B"}</div>
-                  <div className="text-xs text-gray-400">{t("eq.O")}</div>
+                  <div className="text-xs text-gray-400">{t("eq.O.label")}</div>
                 </div>
               </div>
               <p className="text-xs leading-relaxed text-gray-500">{t("eq.O.detail")}</p>
@@ -189,7 +189,7 @@ export default function HomePage() {
                 <div className="equation-variable bg-sv-100 text-sv-600">m</div>
                 <div>
                   <div className="text-sm font-bold text-sv-900">{"0.5% → 3%+"}</div>
-                  <div className="text-xs text-gray-400">{t("eq.m")}</div>
+                  <div className="text-xs text-gray-400">{t("eq.m.label")}</div>
                 </div>
               </div>
               <p className="text-xs leading-relaxed text-gray-500">{t("eq.m.detail")}</p>
@@ -200,7 +200,7 @@ export default function HomePage() {
                 <div className="equation-variable bg-sv-100 text-sv-600">f</div>
                 <div>
                   <div className="text-sm font-bold text-sv-900">{"12%"}</div>
-                  <div className="text-xs text-gray-400">{t("eq.f")}</div>
+                  <div className="text-xs text-gray-400">{t("eq.f.label")}</div>
                 </div>
               </div>
               <p className="text-xs leading-relaxed text-gray-500">{t("eq.f.detail")}</p>
@@ -211,7 +211,7 @@ export default function HomePage() {
                 <div className="equation-variable bg-gold-100 text-gold-600">α</div>
                 <div>
                   <div className="text-sm font-bold text-sv-900">{"17.5%"}</div>
-                  <div className="text-xs text-gray-400">{t("eq.alpha")}</div>
+                  <div className="text-xs text-gray-400">{t("eq.alpha.label")}</div>
                 </div>
               </div>
               <p className="text-xs leading-relaxed text-gray-500">{t("eq.alpha.detail")}</p>
@@ -222,7 +222,7 @@ export default function HomePage() {
                 <div className="equation-variable bg-gold-100 text-gold-600">e</div>
                 <div>
                   <div className="text-sm font-bold text-sv-900">{"92%"}</div>
-                  <div className="text-xs text-gray-400">{t("eq.e")}</div>
+                  <div className="text-xs text-gray-400">{t("eq.e.label")}</div>
                 </div>
               </div>
               <p className="text-xs leading-relaxed text-gray-500">{t("eq.e.detail")}</p>

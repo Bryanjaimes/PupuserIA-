@@ -2,7 +2,7 @@ import {
   Bitcoin, TrendingUp, Shield, Zap, Wallet,
   ArrowUpRight, ArrowDownRight,
 } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 import { BTC_RESERVE } from "@/data/static-metrics";
 import { fmtUsd } from "./helpers";
 import { Skeleton } from "./metric-cards";
@@ -20,7 +20,7 @@ export function BtcReserveSection({
   btcLoading, btcPrice, btcChange24h,
   reserveValue, unrealizedPnl, pnlPercent,
 }: BtcReserveSectionProps) {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <section className="border-b border-gray-200 py-12 lg:py-16" id="btc-reserve">

@@ -6,7 +6,7 @@ import {
   ArrowUpRight, ExternalLink, DollarSign,
   AlertTriangle,
 } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 import {
   useEarthquakes,
   useWeather,
@@ -40,7 +40,7 @@ function updatedLabel(d: Date | null): string {
 /* ── Main Component ── */
 
 export function RealtimeFeedsSection() {
-  const { t } = useLanguage();
+  const t = useTranslations();
   const eq = useEarthquakes();
   const wx = useWeather();
   const aq = useAirQuality();

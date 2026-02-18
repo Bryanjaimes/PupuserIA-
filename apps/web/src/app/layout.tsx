@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { LanguageProvider } from "@/context/language-context";
+import { LanguageProvider } from "@/context/language-provider";
 import { LanguageToggle } from "@/components/language-toggle";
 import "./globals.css";
 

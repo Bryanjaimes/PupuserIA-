@@ -1,10 +1,10 @@
 "use client";
 
 import { ShoppingBag, Home, Plane } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 export default function MarketplacePage() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   const cards = [
     { icon: Plane, titleKey: "market.tours.title", descKey: "market.tours.desc", emoji: "✈️" },

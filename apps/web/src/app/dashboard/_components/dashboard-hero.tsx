@@ -1,7 +1,7 @@
 "use client";
 
 import { Zap, ExternalLink, RefreshCw, AlertTriangle } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 interface DashboardHeroProps {
   totalMetrics: number;
@@ -22,7 +22,7 @@ export function DashboardHero({
   wbLastUpdated,
   wbError,
 }: DashboardHeroProps) {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <>

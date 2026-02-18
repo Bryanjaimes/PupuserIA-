@@ -1,16 +1,16 @@
 "use client";
 
-import { useLanguage } from "@/context/language-context";
+import { useLocaleContext } from "@/context/language-provider";
 
 export function LanguageToggle() {
-  const { lang, setLang } = useLanguage();
+  const { locale, setLocale } = useLocaleContext();
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-center gap-0.5 rounded-full border border-gray-200 bg-white p-1 shadow-lg">
       <button
-        onClick={() => setLang("en")}
+        onClick={() => setLocale("en")}
         className={`rounded-full px-3 py-1.5 text-xs font-bold tracking-wide transition-all ${
-          lang === "en"
+          locale === "en"
             ? "bg-sv-500 text-white shadow-sm"
             : "text-gray-400 hover:text-sv-600"
         }`}
@@ -19,9 +19,9 @@ export function LanguageToggle() {
         EN
       </button>
       <button
-        onClick={() => setLang("es")}
+        onClick={() => setLocale("es")}
         className={`rounded-full px-3 py-1.5 text-xs font-bold tracking-wide transition-all ${
-          lang === "es"
+          locale === "es"
             ? "bg-sv-500 text-white shadow-sm"
             : "text-gray-400 hover:text-sv-600"
         }`}

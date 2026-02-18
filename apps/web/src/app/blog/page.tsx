@@ -1,9 +1,9 @@
 "use client";
 
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 export default function BlogPage() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   const categories = [
     { key: "blog.all" },

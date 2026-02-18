@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, ChevronDown, ChevronUp } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 import { SECTIONS } from "@/data/static-metrics";
 
 interface StickyNavProps {
@@ -19,7 +19,7 @@ export function StickyNav({
   expandedSections,
   setExpandedSections,
 }: StickyNavProps) {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <div className="sticky top-24 z-30 border-b border-gray-200 bg-white/95 backdrop-blur-sm">

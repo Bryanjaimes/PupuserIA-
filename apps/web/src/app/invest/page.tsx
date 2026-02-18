@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { TrendingUp, BarChart3, Calendar, Bitcoin } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 export default function InvestPage() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   const cards = [
     { icon: TrendingUp, titleKey: "investPage.search.title", descKey: "investPage.search.desc", emoji: "📍" },

@@ -7,10 +7,10 @@ import {
   MapPin,
   Bitcoin,
 } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 export function Footer() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   const footerLinks = {
     discover: [

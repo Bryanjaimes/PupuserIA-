@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu, X, Bitcoin } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 
 const navLinkKeys = [
   { href: "/explore", labelKey: "nav.explore" },
@@ -17,7 +17,7 @@ const navLinkKeys = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);

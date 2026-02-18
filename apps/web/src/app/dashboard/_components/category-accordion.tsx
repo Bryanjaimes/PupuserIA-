@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 import { WB_INDICATORS } from "@/lib/world-bank";
 import { SECTIONS } from "@/data/static-metrics";
 import type { WBDataPoint } from "@/lib/world-bank";
@@ -18,7 +18,7 @@ interface CategoryAccordionProps {
 export function CategoryAccordion({
   sectionData, searchLower, expandedSections, toggleSection, wbLoading, filteredSections,
 }: CategoryAccordionProps) {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   let currentParent = "";
   return (

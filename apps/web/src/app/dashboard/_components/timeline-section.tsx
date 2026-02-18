@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Clock } from "lucide-react";
-import { useLanguage } from "@/context/language-context";
+import { useTranslations } from "next-intl";
 import { TIMELINE } from "@/data/static-metrics";
 import { TIMELINE_CAT_COLORS } from "./helpers";
 
 export function TimelineSection() {
-  const { t } = useLanguage();
+  const t = useTranslations();
   const [filter, setFilter] = useState<string | null>(null);
   const filtered = filter ? TIMELINE.filter((tl) => tl.category === filter) : TIMELINE;
 
