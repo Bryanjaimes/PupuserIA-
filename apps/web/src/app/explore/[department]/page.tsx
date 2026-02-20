@@ -33,7 +33,7 @@ const PropertyExplorerMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full w-full items-center justify-center bg-sv-100">
+      <div className="flex h-full w-full items-center justify-center bg-white/10">
         <Loader2 className="h-8 w-8 animate-spin text-sv-400" />
       </div>
     ),
@@ -166,10 +166,10 @@ export default function DepartmentPage() {
 
   if (!deptName) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-white pt-20">
+      <main className="flex min-h-screen items-center justify-center bg-[#0a0a0a] pt-20">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-sv-900">Department not found</h1>
-          <Link href="/explore" className="mt-4 inline-block text-sm text-gold-600 hover:underline">
+          <h1 className="text-2xl font-bold text-white/90">Department not found</h1>
+          <Link href="/explore" className="mt-4 inline-block text-sm text-gold-400 hover:underline">
             ← Back to all departments
           </Link>
         </div>
@@ -198,7 +198,7 @@ export default function DepartmentPage() {
         </nav>
 
         {/* ── Header ────────────────────────────────── */}
-        <h1 className="text-3xl font-extrabold text-sv-950 md:text-4xl">
+        <h1 className="text-3xl font-extrabold text-white md:text-4xl">
           {deptInfo?.emoji || "📍"} {deptName}
         </h1>
         <p className="mt-1 text-base text-sv-500">
@@ -210,32 +210,32 @@ export default function DepartmentPage() {
         {/* ── Stats row ─────────────────────────────── */}
         {!loading && (
           <div className="mt-4 flex flex-wrap gap-3">
-            <div className="rounded-xl border border-sv-200 bg-white px-4 py-2.5 text-center">
-              <div className="text-xl font-extrabold text-sv-950">{properties.length}</div>
+            <div className="rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2.5 text-center">
+              <div className="text-xl font-extrabold text-white">{properties.length}</div>
               <div className="text-[11px] text-sv-500">Listings</div>
             </div>
-            <div className="rounded-xl border border-sv-200 bg-white px-4 py-2.5 text-center">
-              <div className="text-xl font-extrabold text-sv-950">{fmt(avgPrice)}</div>
+            <div className="rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2.5 text-center">
+              <div className="text-xl font-extrabold text-white">{fmt(avgPrice)}</div>
               <div className="text-[11px] text-sv-500">Avg Price</div>
             </div>
-            <div className="rounded-xl border border-sv-200 bg-white px-4 py-2.5 text-center">
-              <div className="text-xl font-extrabold text-sv-950">{municipalities.length}</div>
+            <div className="rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2.5 text-center">
+              <div className="text-xl font-extrabold text-white">{municipalities.length}</div>
               <div className="text-[11px] text-sv-500">Municipios</div>
             </div>
-            <div className="rounded-xl border border-sv-200 bg-white px-4 py-2.5 text-center">
-              <div className="text-xl font-extrabold text-gold-600">
+            <div className="rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2.5 text-center">
+              <div className="text-xl font-extrabold text-gold-400">
                 {properties.filter((p) => p.is_featured).length}
               </div>
               <div className="text-[11px] text-sv-500">Featured</div>
             </div>
             {deptInfo && (
               <>
-                <div className="rounded-xl border border-sv-200 bg-white px-4 py-2.5 text-center">
-                  <div className="text-xl font-extrabold text-sv-950">{deptInfo.population}</div>
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2.5 text-center">
+                  <div className="text-xl font-extrabold text-white">{deptInfo.population}</div>
                   <div className="text-[11px] text-sv-500">Population</div>
                 </div>
-                <div className="rounded-xl border border-sv-200 bg-white px-4 py-2.5 text-center">
-                  <div className="text-xl font-extrabold text-sv-950">{deptInfo.area_km2.toLocaleString()} km²</div>
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2.5 text-center">
+                  <div className="text-xl font-extrabold text-white">{deptInfo.area_km2.toLocaleString()} km²</div>
                   <div className="text-[11px] text-sv-500">Area</div>
                 </div>
               </>
@@ -247,16 +247,16 @@ export default function DepartmentPage() {
             DEPARTMENT HISTORY & INFO
             ═══════════════════════════════════════════ */}
         {deptInfo && (
-          <section className="mt-8 rounded-2xl border border-sv-200 bg-white p-6 shadow-sm">
+          <section className="mt-8 rounded-2xl border border-white/10 bg-[#0a0a0a] p-6 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
-              <BookOpen className="h-5 w-5 text-gold-600" />
-              <h2 className="text-lg font-bold text-sv-900">
+              <BookOpen className="h-5 w-5 text-gold-400" />
+              <h2 className="text-lg font-bold text-white/90">
                 About {deptName}
               </h2>
             </div>
 
             {/* Summary */}
-            <p className="text-sm leading-relaxed text-sv-700 mb-4">
+            <p className="text-sm leading-relaxed text-white/60 mb-4">
               {deptInfo.summary}
             </p>
 
@@ -266,22 +266,22 @@ export default function DepartmentPage() {
                 <Landmark className="h-4 w-4 text-sv-500" />
                 Brief History
               </h3>
-              <p className="text-sm leading-relaxed text-sv-600">
+              <p className="text-sm leading-relaxed text-sv-400">
                 {deptInfo.history}
               </p>
             </div>
 
             {/* Quick facts row */}
             <div className="flex flex-wrap gap-4 mb-5 text-sm">
-              <div className="flex items-center gap-1.5 text-sv-600">
+              <div className="flex items-center gap-1.5 text-sv-400">
                 <Landmark className="h-3.5 w-3.5 text-sv-400" />
                 Capital: <span className="font-semibold text-sv-800">{deptInfo.capital}</span>
               </div>
-              <div className="flex items-center gap-1.5 text-sv-600">
+              <div className="flex items-center gap-1.5 text-sv-400">
                 <Mountain className="h-3.5 w-3.5 text-sv-400" />
                 Elevation: <span className="font-semibold text-sv-800">{deptInfo.elevation}</span>
               </div>
-              <div className="flex items-center gap-1.5 text-sv-600">
+              <div className="flex items-center gap-1.5 text-sv-400">
                 <Users className="h-3.5 w-3.5 text-sv-400" />
                 Pop: <span className="font-semibold text-sv-800">{deptInfo.population}</span>
               </div>
@@ -296,9 +296,9 @@ export default function DepartmentPage() {
               {deptInfo.highlights.map((h) => (
                 <li
                   key={h}
-                  className="flex items-center gap-2 rounded-lg bg-sv-50 px-3 py-2 text-xs font-medium text-sv-700"
+                  className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-xs font-medium text-white/60"
                 >
-                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gold-500" />
+                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gold-500/100" />
                   {h}
                 </li>
               ))}
@@ -307,7 +307,7 @@ export default function DepartmentPage() {
         )}
 
         {/* ── Map ───────────────────────────────────── */}
-        <div className="mt-8 overflow-hidden rounded-2xl border border-sv-200 shadow-lg" style={{ height: 380 }}>
+        <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 shadow-lg" style={{ height: 380 }}>
           {!loading && markers.length > 0 ? (
             <PropertyExplorerMap
               center={mapCenter}
@@ -317,21 +317,21 @@ export default function DepartmentPage() {
               className="h-full w-full"
             />
           ) : (
-            <div className="flex h-full items-center justify-center bg-sv-100">
+            <div className="flex h-full items-center justify-center bg-white/10">
               <Loader2 className="h-8 w-8 animate-spin text-sv-300" />
             </div>
           )}
         </div>
 
         {/* ── Municipality Grid ─────────────────────── */}
-        <h2 className="mt-10 mb-5 text-xl font-bold text-sv-900">
+        <h2 className="mt-10 mb-5 text-xl font-bold text-white/90">
           Municipalities in {deptName}
         </h2>
 
         {loading ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-32 animate-pulse rounded-2xl bg-sv-100" />
+              <div key={i} className="h-32 animate-pulse rounded-2xl bg-white/10" />
             ))}
           </div>
         ) : (
@@ -344,7 +344,7 @@ export default function DepartmentPage() {
               >
                 {/* Thumbnail */}
                 {muni.sample ? (
-                  <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-sv-100">
+                  <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-white/10">
                     <Image
                       src={muni.sample}
                       alt={muni.name}
@@ -355,14 +355,14 @@ export default function DepartmentPage() {
                     />
                   </div>
                 ) : (
-                  <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-xl bg-sv-100">
+                  <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-xl bg-white/10">
                     <MapPin className="h-6 w-6 text-sv-300" />
                   </div>
                 )}
 
                 {/* Info */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-sv-900 group-hover:text-gold-700 transition-colors truncate">
+                  <h3 className="font-bold text-white/90 group-hover:text-gold-700 transition-colors truncate">
                     {muni.name}
                   </h3>
                   <div className="mt-0.5 flex items-center gap-3 text-xs text-sv-500">
@@ -373,14 +373,14 @@ export default function DepartmentPage() {
                       <TrendingUp className="h-3 w-3" /> {fmt(muni.avg_price)}
                     </span>
                     {muni.featured > 0 && (
-                      <span className="flex items-center gap-1 text-gold-600">
+                      <span className="flex items-center gap-1 text-gold-400">
                         <Star className="h-3 w-3" /> {muni.featured}
                       </span>
                     )}
                   </div>
                 </div>
 
-                <ChevronRight className="h-4 w-4 flex-shrink-0 text-sv-300 transition-all group-hover:translate-x-1 group-hover:text-sv-500" />
+                <ChevronRight className="h-4 w-4 flex-shrink-0 text-sv-300 transition-all group-hover:translate-x-1 group-hover:text-gold-400" />
               </Link>
             ))}
           </div>

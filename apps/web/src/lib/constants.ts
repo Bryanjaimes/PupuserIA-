@@ -1,14 +1,15 @@
 /**
- * Application-wide constants for Gateway El Salvador.
+ * Application-wide constants for PupuserIA.
+ * IA = Inteligencia Artificial
  */
 
 export const SITE_CONFIG = {
-  name: "Gateway El Salvador",
+  name: "PupuserIA",
   tagline: "Discover, Invest, Transform",
   description:
-    "The AI-powered gateway connecting the world to El Salvador.",
-  url: "https://gatewayelsvador.com",
-  email: "hello@gatewayelsvador.com",
+    "The AI-powered platform connecting the world to El Salvador.",
+  url: "https://pupuseria.ai",
+  email: "hello@pupuseria.ai",
 } as const;
 
 /**

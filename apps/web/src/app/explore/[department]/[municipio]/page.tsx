@@ -104,7 +104,7 @@ function PropertyCard({
       className="group glass-card overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
     >
       {/* Image */}
-      <div className="relative h-52 overflow-hidden bg-sv-100">
+      <div className="relative h-52 overflow-hidden bg-white/10">
         <Image
           src={images[imgIdx]}
           alt={property.title}
@@ -123,7 +123,7 @@ function PropertyCard({
                 e.preventDefault();
                 setImgIdx((i) => (i === 0 ? images.length - 1 : i - 1));
               }}
-              className="absolute left-1.5 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 opacity-0 transition group-hover:opacity-100 hover:bg-white"
+              className="absolute left-1.5 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 opacity-0 transition group-hover:opacity-100 hover:bg-[#0a0a0a]"
               aria-label="Previous"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -133,7 +133,7 @@ function PropertyCard({
                 e.preventDefault();
                 setImgIdx((i) => (i === images.length - 1 ? 0 : i + 1));
               }}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 opacity-0 transition group-hover:opacity-100 hover:bg-white"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 opacity-0 transition group-hover:opacity-100 hover:bg-[#0a0a0a]"
               aria-label="Next"
             >
               <ChevronRight className="h-4 w-4" />
@@ -143,11 +143,11 @@ function PropertyCard({
         {/* Badges */}
         <div className="absolute left-2 top-2 flex gap-1.5">
           {property.is_featured && (
-            <span className="flex items-center gap-1 rounded-full bg-gold-500 px-2 py-0.5 text-xs font-semibold text-white shadow">
+            <span className="flex items-center gap-1 rounded-full bg-gold-500/100 px-2 py-0.5 text-xs font-semibold text-white shadow">
               <Star className="h-3 w-3" /> Featured
             </span>
           )}
-          <span className="rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium capitalize text-sv-800">
+          <span className="rounded-full bg-black/90 px-2 py-0.5 text-xs font-medium capitalize text-sv-800">
             {property.property_type}
           </span>
         </div>
@@ -159,13 +159,13 @@ function PropertyCard({
           <MapPin className="h-3 w-3" />
           {property.municipio}, {property.department}
         </div>
-        <h3 className="mb-2 line-clamp-2 text-base font-bold leading-tight text-sv-900">
+        <h3 className="mb-2 line-clamp-2 text-base font-bold leading-tight text-white/90">
           {property.title}
         </h3>
 
         {/* Price */}
         <div className="mb-3 flex items-baseline gap-2">
-          <span className="text-xl font-extrabold text-sv-950">
+          <span className="text-xl font-extrabold text-white">
             {formatPrice(property.price_usd)}
           </span>
           {property.ai_valuation_usd &&
@@ -179,7 +179,7 @@ function PropertyCard({
         </div>
 
         {/* Stats */}
-        <div className="flex flex-wrap gap-3 text-xs text-sv-600">
+        <div className="flex flex-wrap gap-3 text-xs text-sv-400">
           {property.bedrooms != null && (
             <span className="flex items-center gap-1">
               <BedDouble className="h-3.5 w-3.5" /> {property.bedrooms} bd
@@ -203,13 +203,13 @@ function PropertyCard({
             {property.features.slice(0, 3).map((f) => (
               <span
                 key={f}
-                className="rounded-full bg-sv-50 px-2 py-0.5 text-[10px] font-medium text-sv-600"
+                className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-medium text-sv-400"
               >
                 {featureLabel(f)}
               </span>
             ))}
             {property.features.length > 3 && (
-              <span className="rounded-full bg-sv-50 px-2 py-0.5 text-[10px] font-medium text-sv-500">
+              <span className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-medium text-sv-500">
                 +{property.features.length - 3}
               </span>
             )}
@@ -219,7 +219,7 @@ function PropertyCard({
         {/* Score bar */}
         {property.neighborhood_score != null && (
           <div className="mt-3 flex items-center gap-2">
-            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-sv-100">
+            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-gold-400 to-gold-500 transition-all"
                 style={{
@@ -268,10 +268,10 @@ export default function MunicipalityListingsPage() {
 
   if (!deptName) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-white pt-20">
+      <main className="flex min-h-screen items-center justify-center bg-[#0a0a0a] pt-20">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-sv-900">Department not found</h1>
-          <Link href="/explore" className="mt-4 inline-block text-sm text-gold-600 hover:underline">
+          <h1 className="text-2xl font-bold text-white/90">Department not found</h1>
+          <Link href="/explore" className="mt-4 inline-block text-sm text-gold-400 hover:underline">
             ← Back to all departments
           </Link>
         </div>
@@ -300,7 +300,7 @@ export default function MunicipalityListingsPage() {
         </nav>
 
         {/* ── Header ──────────────────────────────── */}
-        <h1 className="text-3xl font-extrabold text-sv-950 md:text-4xl">
+        <h1 className="text-3xl font-extrabold text-white md:text-4xl">
           Properties in {muniName}
         </h1>
         <p className="mt-1 text-base text-sv-500">
@@ -310,7 +310,7 @@ export default function MunicipalityListingsPage() {
 
         {/* ── Filters ─────────────────────────────── */}
         <div className="mt-6 mb-6 flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1 rounded-xl border border-sv-200 bg-white p-1">
+          <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-[#0a0a0a] p-1">
             {PROPERTY_TYPES.map(({ value, label, icon: Icon }) => (
               <button
                 key={value}
@@ -321,7 +321,7 @@ export default function MunicipalityListingsPage() {
                 className={`flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium transition ${
                   propertyType === value
                     ? "bg-sv-900 text-white"
-                    : "text-sv-600 hover:bg-sv-50"
+                    : "text-sv-400 hover:bg-white/5"
                 }`}
               >
                 <Icon className="h-3.5 w-3.5" />
@@ -336,7 +336,7 @@ export default function MunicipalityListingsPage() {
               setSortBy(e.target.value as typeof sortBy);
               setPage(1);
             }}
-            className="rounded-xl border border-sv-200 bg-white px-3 py-2 text-sm text-sv-800 focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-400"
+            className="rounded-xl border border-white/10 bg-[#0a0a0a] px-3 py-2 text-sm text-sv-800 focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-400"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -363,17 +363,17 @@ export default function MunicipalityListingsPage() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="glass-card animate-pulse rounded-2xl">
-                <div className="h-52 rounded-t-2xl bg-sv-200" />
+                <div className="h-52 rounded-t-2xl bg-white/15" />
                 <div className="space-y-3 p-5">
-                  <div className="h-3 w-24 rounded bg-sv-200" />
-                  <div className="h-4 w-3/4 rounded bg-sv-200" />
-                  <div className="h-6 w-1/2 rounded bg-sv-200" />
+                  <div className="h-3 w-24 rounded bg-white/15" />
+                  <div className="h-4 w-3/4 rounded bg-white/15" />
+                  <div className="h-6 w-1/2 rounded bg-white/15" />
                 </div>
               </div>
             ))}
           </div>
         ) : properties.length === 0 ? (
-          <div className="rounded-2xl border border-sv-200 bg-white p-12 text-center">
+          <div className="rounded-2xl border border-white/10 bg-[#0a0a0a] p-12 text-center">
             <Search className="mx-auto mb-3 h-10 w-10 text-sv-300" />
             <h3 className="mb-1 text-lg font-bold text-sv-800">
               No properties found
@@ -401,7 +401,7 @@ export default function MunicipalityListingsPage() {
             <button
               disabled={page <= 1}
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              className="rounded-lg border border-sv-200 bg-white px-3 py-1.5 text-sm transition disabled:opacity-40 hover:bg-sv-50"
+              className="rounded-lg border border-white/10 bg-[#0a0a0a] px-3 py-1.5 text-sm transition disabled:opacity-40 hover:bg-white/5"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -420,7 +420,7 @@ export default function MunicipalityListingsPage() {
                     className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
                       p === page
                         ? "bg-sv-900 text-white"
-                        : "border border-sv-200 bg-white text-sv-600 hover:bg-sv-50"
+                        : "border border-white/10 bg-[#0a0a0a] text-sv-400 hover:bg-white/5"
                     }`}
                   >
                     {p}
@@ -430,7 +430,7 @@ export default function MunicipalityListingsPage() {
             <button
               disabled={page >= totalPages}
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              className="rounded-lg border border-sv-200 bg-white px-3 py-1.5 text-sm transition disabled:opacity-40 hover:bg-sv-50"
+              className="rounded-lg border border-white/10 bg-[#0a0a0a] px-3 py-1.5 text-sm transition disabled:opacity-40 hover:bg-white/5"
             >
               <ChevronRight className="h-4 w-4" />
             </button>

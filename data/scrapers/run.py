@@ -229,6 +229,413 @@ async def run_realtor(args) -> None:
     logger.info("\nDone!")
 
 
+async def run_encuentra24_ajax(args) -> None:
+    """Run the Encuentra24 AJAX API scraper."""
+    from encuentra24_ajax import Encuentra24AjaxScraper
+
+    scraper = Encuentra24AjaxScraper(include_rentals=args.include_rentals)
+    if args.rate_limit:
+        scraper.requests_per_second = args.rate_limit
+
+    logger.info("=" * 60)
+    logger.info("Encuentra24 El Salvador — AJAX API Scraper")
+    logger.info("=" * 60)
+    logger.info(f"  Department:      {args.department or 'ALL'}")
+    logger.info(f"  Max pages:       {args.max_pages}")
+    logger.info(f"  Include rentals: {args.include_rentals}")
+    logger.info(f"  Output dir:      {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="encuentra24",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+            max_pages=args.max_pages,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 50 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"encuentra24_ajax_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+    logger.info("\nDone!")
+
+
+async def run_lamudi(args) -> None:
+    """Run the Lamudi scraper."""
+    from lamudi import LamudiScraper
+
+    scraper = LamudiScraper()
+    if args.rate_limit:
+        scraper.requests_per_second = args.rate_limit
+
+    logger.info("=" * 60)
+    logger.info("Lamudi El Salvador — Property Scraper")
+    logger.info("=" * 60)
+    logger.info(f"  Department:    {args.department or 'ALL'}")
+    logger.info(f"  Max pages:     {args.max_pages}")
+    logger.info(f"  Fetch details: {not args.no_details}")
+    logger.info(f"  Output dir:    {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="lamudi",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+            max_pages=args.max_pages,
+            fetch_details=not args.no_details,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 25 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"lamudi_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+    logger.info("\nDone!")
+
+
+async def run_properstar(args) -> None:
+    """Run the Properstar scraper."""
+    from properstar import ProperstarScraper
+
+    scraper = ProperstarScraper()
+    if args.rate_limit:
+        scraper.requests_per_second = args.rate_limit
+
+    logger.info("=" * 60)
+    logger.info("Properstar — El Salvador Property Scraper")
+    logger.info("=" * 60)
+    logger.info(f"  Department:    {args.department or 'ALL'}")
+    logger.info(f"  Max pages:     {args.max_pages}")
+    logger.info(f"  Fetch details: {not args.no_details}")
+    logger.info(f"  Output dir:    {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="properstar",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+            max_pages=args.max_pages,
+            fetch_details=not args.no_details,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 25 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"properstar_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+    logger.info("\nDone!")
+
+
+async def run_point2(args) -> None:
+    """Run the Point2 Homes scraper."""
+    from point2 import Point2Scraper
+
+    scraper = Point2Scraper()
+    if args.rate_limit:
+        scraper.requests_per_second = args.rate_limit
+
+    logger.info("=" * 60)
+    logger.info("Point2 Homes — El Salvador Property Scraper")
+    logger.info("=" * 60)
+    logger.info(f"  Department:    {args.department or 'ALL'}")
+    logger.info(f"  Max pages:     {args.max_pages}")
+    logger.info(f"  Fetch details: {not args.no_details}")
+    logger.info(f"  Output dir:    {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="point2",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+            max_pages=args.max_pages,
+            fetch_details=not args.no_details,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 25 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"point2_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+    logger.info("\nDone!")
+
+
+async def run_lavitrina(args) -> None:
+    """Run the LaVitrina scraper."""
+    from lavitrina import LaVitrinaScraper
+
+    scraper = LaVitrinaScraper()
+    if args.rate_limit:
+        scraper.requests_per_second = args.rate_limit
+
+    logger.info("=" * 60)
+    logger.info("LaVitrina SV — Property Scraper")
+    logger.info("=" * 60)
+    logger.info(f"  Department:    {args.department or 'ALL'}")
+    logger.info(f"  Max pages:     {args.max_pages}")
+    logger.info(f"  Fetch details: {not args.no_details}")
+    logger.info(f"  Output dir:    {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="lavitrina",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+            max_pages=args.max_pages,
+            fetch_details=not args.no_details,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 25 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"lavitrina_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+    logger.info("\nDone!")
+
+
+async def run_compraventa(args) -> None:
+    """Run the CompraVenta SV scraper."""
+    from compraventa import CompraVentaScraper
+
+    scraper = CompraVentaScraper()
+    if args.rate_limit:
+        scraper.requests_per_second = args.rate_limit
+
+    logger.info("=" * 60)
+    logger.info("CompraVenta SV — Property Scraper")
+    logger.info("=" * 60)
+    logger.info(f"  Department:    {args.department or 'ALL'}")
+    logger.info(f"  Max pages:     {args.max_pages}")
+    logger.info(f"  Fetch details: {not args.no_details}")
+    logger.info(f"  Output dir:    {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="compraventa",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+            max_pages=args.max_pages,
+            fetch_details=not args.no_details,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 25 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"compraventa_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+    logger.info("\nDone!")
+
+
+async def run_all(args) -> None:
+    """Run ALL scrapers sequentially and merge results."""
+    scrapers_to_run = [
+        ("lamudi", run_lamudi),
+        ("properstar", run_properstar),
+        ("point2", run_point2),
+        ("lavitrina", run_lavitrina),
+        ("compraventa", run_compraventa),
+    ]
+
+    logger.info("=" * 60)
+    logger.info("RUNNING ALL SCRAPERS")
+    logger.info("=" * 60)
+
+    for name, runner in scrapers_to_run:
+        logger.info(f"\n{'─' * 40}")
+        logger.info(f"Starting: {name}")
+        logger.info(f"{'─' * 40}")
+        try:
+            await runner(args)
+        except Exception as e:
+            logger.error(f"Scraper {name} failed: {e}")
+            continue
+
+    logger.info("\n" + "=" * 60)
+    logger.info("ALL SCRAPERS COMPLETE")
+    logger.info("=" * 60)
+    logger.info("Run `python merge_datasets.py` to merge and deduplicate all outputs.")
+
+
 async def run_ingest(args) -> None:
     """Ingest properties from a JSONL file."""
     filepath = Path(args.file)
@@ -382,6 +789,69 @@ Examples:
     ing_parser = subparsers.add_parser("ingest", help="Ingest from JSONL file")
     ing_parser.add_argument("--file", "-f", required=True, help="JSONL file path")
 
+    # ── encuentra24-ajax ──
+    e24a_parser = subparsers.add_parser("encuentra24-ajax", help="Scrape Encuentra24 via AJAX API (no browser needed)")
+    e24a_parser.add_argument("--department", "-d", help="Filter by department name")
+    e24a_parser.add_argument("--max-pages", type=int, default=100, help="Max pages per category (86 pages = all sales)")
+    e24a_parser.add_argument("--include-rentals", action="store_true", help="Also scrape rental listings")
+    e24a_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    e24a_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    e24a_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
+    # ── lamudi ──
+    lam_parser = subparsers.add_parser("lamudi", help="Scrape Lamudi SV")
+    lam_parser.add_argument("--department", "-d", help="Filter by department name")
+    lam_parser.add_argument("--max-pages", type=int, default=30, help="Max listing pages to scrape")
+    lam_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    lam_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    lam_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    lam_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
+    # ── properstar ──
+    ps_parser = subparsers.add_parser("properstar", help="Scrape Properstar")
+    ps_parser.add_argument("--department", "-d", help="Filter by department name")
+    ps_parser.add_argument("--max-pages", type=int, default=20, help="Max listing pages to scrape")
+    ps_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    ps_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    ps_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    ps_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
+    # ── point2 ──
+    p2_parser = subparsers.add_parser("point2", help="Scrape Point2 Homes")
+    p2_parser.add_argument("--department", "-d", help="Filter by department name")
+    p2_parser.add_argument("--max-pages", type=int, default=15, help="Max listing pages to scrape")
+    p2_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    p2_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    p2_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    p2_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
+    # ── lavitrina ──
+    lv_parser = subparsers.add_parser("lavitrina", help="Scrape LaVitrina SV")
+    lv_parser.add_argument("--department", "-d", help="Filter by department name")
+    lv_parser.add_argument("--max-pages", type=int, default=20, help="Max listing pages to scrape")
+    lv_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    lv_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    lv_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    lv_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
+    # ── compraventa ──
+    cv_parser = subparsers.add_parser("compraventa", help="Scrape CompraVenta SV")
+    cv_parser.add_argument("--department", "-d", help="Filter by department name")
+    cv_parser.add_argument("--max-pages", type=int, default=20, help="Max listing pages to scrape")
+    cv_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    cv_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    cv_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    cv_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
+    # ── all ──
+    all_parser = subparsers.add_parser("all", help="Run ALL scrapers (excluding realtor & encuentra24)")
+    all_parser.add_argument("--department", "-d", help="Filter by department name")
+    all_parser.add_argument("--max-pages", type=int, default=20, help="Max listing pages per source")
+    all_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    all_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    all_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    all_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
     # ── stats ──
     subparsers.add_parser("stats", help="Show database statistics")
 
@@ -403,6 +873,20 @@ Examples:
         asyncio.run(run_realtor(args))
     elif args.command == "encuentra24":
         asyncio.run(run_encuentra24(args))
+    elif args.command == "encuentra24-ajax":
+        asyncio.run(run_encuentra24_ajax(args))
+    elif args.command == "lamudi":
+        asyncio.run(run_lamudi(args))
+    elif args.command == "properstar":
+        asyncio.run(run_properstar(args))
+    elif args.command == "point2":
+        asyncio.run(run_point2(args))
+    elif args.command == "lavitrina":
+        asyncio.run(run_lavitrina(args))
+    elif args.command == "compraventa":
+        asyncio.run(run_compraventa(args))
+    elif args.command == "all":
+        asyncio.run(run_all(args))
     elif args.command == "ingest":
         asyncio.run(run_ingest(args))
     elif args.command == "stats":

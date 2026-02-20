@@ -22,7 +22,7 @@ export function StickyNav({
   const t = useTranslations();
 
   return (
-    <div className="sticky top-24 z-30 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
+    <div className="sticky top-24 z-30 border-b border-white/10 bg-black/95 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-6 py-3">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
@@ -32,7 +32,7 @@ export function StickyNav({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={`${t("dash.searchPlaceholder")} ${totalMetrics} ${t("dash.metrics").toLowerCase()}...`}
-              className="w-full rounded-md border border-gray-200 bg-white py-2 pl-10 pr-4 text-sm text-sv-950 placeholder-gray-400 outline-none transition-all focus:border-sv-400 focus:ring-1 focus:ring-sv-400"
+              className="w-full rounded-md border border-white/10 bg-[#0a0a0a] py-2 pl-10 pr-4 text-sm text-white placeholder-gray-400 outline-none transition-all focus:border-sv-400 focus:ring-1 focus:ring-sv-400"
             />
           </div>
           <nav className="flex flex-wrap items-center gap-1 text-[10px]">
@@ -46,13 +46,13 @@ export function StickyNav({
               { num: "VII", label: t("dash.misc"),       sid: SECTIONS[14]?.id },
             ].map((n) => (
               <a key={n.num} href={`#section-${n.sid}`}
-                className="rounded-md border border-gray-200 bg-white px-2.5 py-1.5 font-semibold text-gray-500 transition-all hover:border-sv-300 hover:text-sv-600">
+                className="rounded-md border border-white/10 bg-[#0a0a0a] px-2.5 py-1.5 font-semibold text-gray-500 transition-all hover:border-sv-300 hover:text-sv-400">
                 {n.num}. {n.label}
               </a>
             ))}
             <a href="#btc-reserve" className="rounded-md border border-orange-200 bg-orange-50 px-2.5 py-1.5 font-semibold text-orange-600 transition-all hover:bg-orange-100">₿ BTC</a>
-            <a href="#investments" className="rounded-md border border-gold-200 bg-gold-50 px-2.5 py-1.5 font-semibold text-gold-600 transition-all hover:bg-gold-100">{t("dash.investmentsTitle").split(" ")[0]}</a>
-            <a href="#timeline" className="rounded-md border border-sv-200 bg-sv-50 px-2.5 py-1.5 font-semibold text-sv-600 transition-all hover:bg-sv-100">{t("dash.timelineTitle").split(" ").slice(-1)[0]}</a>
+            <a href="#investments" className="rounded-md border border-gold-200 bg-gold-500/10 px-2.5 py-1.5 font-semibold text-gold-400 transition-all hover:bg-gold-100">{t("dash.investmentsTitle").split(" ")[0]}</a>
+            <a href="#timeline" className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1.5 font-semibold text-sv-400 transition-all hover:bg-white/10">{t("dash.timelineTitle").split(" ").slice(-1)[0]}</a>
             <button
               onClick={() => {
                 if (expandedSections.size === SECTIONS.length) {
@@ -61,7 +61,7 @@ export function StickyNav({
                   setExpandedSections(new Set(SECTIONS.map((s) => s.id)));
                 }
               }}
-              className="ml-1 flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 px-2.5 py-1.5 font-semibold text-gray-500 transition-all hover:bg-gray-100 hover:text-gray-700"
+              className="ml-1 flex items-center gap-1 rounded-md border border-white/10 bg-[#111] px-2.5 py-1.5 font-semibold text-gray-500 transition-all hover:bg-white/10 hover:text-white/70"
             >
               {expandedSections.size === SECTIONS.length ? (
                 <><ChevronUp className="h-3 w-3" /> {t("dash.collapse")}</>

@@ -28,8 +28,8 @@ export default function BlogPage() {
           {t("blog.stories")}
           <span className="h-px w-8 bg-sv-500/30" />
         </div>
-        <h1 className="mb-4 text-4xl font-extrabold text-sv-950 md:text-5xl">{t("blog.title")}</h1>
-        <p className="mb-12 max-w-2xl text-lg text-sv-700/50">
+        <h1 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">{t("blog.title")}</h1>
+        <p className="mb-12 max-w-2xl text-lg text-white/40">
           {t("blog.desc")}
         </p>
 
@@ -41,7 +41,7 @@ export default function BlogPage() {
               className={`rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
                 i === 0
                   ? "bg-gradient-to-r from-sv-500 to-sv-600 text-white shadow-lg shadow-sv-500/20"
-                  : "glass-card text-sv-700 hover:shadow-md"
+                  : "glass-card text-white/60 hover:shadow-md"
               }`}
             >
               {t(cat.key)}
@@ -58,10 +58,10 @@ export default function BlogPage() {
                   {post.emoji}
                 </div>
                 <div>
-                  <h3 className="mb-1 text-lg font-bold text-sv-900">{t(post.titleKey)}</h3>
+                  <h3 className="mb-1 text-lg font-bold text-white/90">{t(post.titleKey)}</h3>
                   <div className="flex items-center gap-3">
                     <span className="rounded-full bg-sv-500/8 px-2.5 py-0.5 text-xs font-medium text-sv-500">{post.tag}</span>
-                    <span className="text-xs text-sv-600/40">{t("blog.comingSoon")}</span>
+                    <span className="text-xs text-sv-400/40">{t("blog.comingSoon")}</span>
                   </div>
                 </div>
               </div>

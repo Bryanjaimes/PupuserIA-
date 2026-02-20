@@ -1,4 +1,4 @@
-{
+﻿{
   "nav": {
     "govBar": "UN PORTAL OFICIAL DE EL SALVADOR",
     "explore": "Explorar",
@@ -15,8 +15,8 @@
     "badge": "El Portal Digital de El Salvador",
     "title1": "El Salvador,",
     "title2": "reimaginado.",
-    "subtitle": "Explora. Invierte. Financia la educación.",
-    "desc": "El portal impulsado por IA hacia la economía de más rápido crecimiento en Centroamérica.",
+    "subtitle": "Desde los volcanes hasta la costa. Explora. Invierte. Financia la educación.",
+    "desc": "El portal impulsado por IA hacia la economía digital emergente de El Salvador.",
     "getStarted": "Comenzar",
     "investNow": "Invertir Ahora",
     "tourismGdp": "PIB Turístico",
@@ -43,10 +43,10 @@
     "cycleTitle2": "el futuro.",
     "cycleSubtitle": "Los ingresos van directamente a educación, nutrición y tecnología para niños salvadoreños.",
     "cycle": {
-      "tourism": "Turismo e Inversión",
-      "platform": "Plataforma Gateway",
-      "fund": "Fondo de la Fundación",
-      "children": "Niños Empoderados"
+      "tourism": "Surf, volcanes y pupusas atraen al mundo",
+      "platform": "PupuserIA procesa cada transacción",
+      "fund": "Fondo de la Fundación recibe 17.5% automáticamente",
+      "children": "Niños en los 14 departamentos empoderados"
     },
     "virtuousCycle": "♻️ Ciclo Virtuoso",
     "missionBadge": "La Misión",
@@ -83,7 +83,7 @@
       "malnutrition": "Desnutrición Crónica Infantil (<5)",
       "neet": "Tasa NEET Juvenil (15-24)"
     },
-    "impactStatement": "Gateway El Salvador existe porque la transformación de un país debe medirse no por su crecimiento del PIB o llegadas turísticas, sino por si un niño en el cantón más remoto tiene la misma oportunidad de aprender, crecer y construir que un niño en cualquier otro lugar del mundo.",
+    "impactStatement": "PupuserIA existe porque la transformación de un país debe medirse no por su crecimiento del PIB o llegadas turísticas, sino por si un niño en el pueblo más remoto — de Morazán a Chalatenango — tiene la misma oportunidad de aprender, crecer y construir que un niño en cualquier otro lugar del mundo.",
     "earlyAccess": "Acceso Anticipado",
     "joinWaitlist": "Únete a la lista.",
     "waitlistDesc": "Sé el primero en explorar, invertir y generar impacto.",
@@ -107,8 +107,8 @@
     "aiTutoring": "Tutoría IA",
     "partnerSchools": "Escuelas Asociadas",
     "donate": "Donar",
-    "copyright": "© 2026 Gateway El Salvador. Hecho con IA. Para los niños de El Salvador.",
-    "engineered": "Diseñado y Desarrollado en San Salvador"
+    "copyright": "© 2026 PupuserIA. Inteligencia Artificial. Para los niños de El Salvador.",
+    "engineered": "Diseñado y Desarrollado en San Salvador 🌋"
   },
   "dash": {
     "liveData": "Datos en Vivo",
@@ -359,7 +359,7 @@
     "startExploring": "Comenzar a Explorar",
     "investNow": "Invertir Ahora",
     "missionTitle": "Lo Que Creemos",
-    "missionP1": "Más del 50% de los niños salvadoreños nunca terminan sexto grado. En pueblos rurales, la educación promedio dura solo 5.6 años. Gateway El Salvador existe para cambiar ese número—permanentemente.",
+    "missionP1": "Más del 50% de los niños salvadoreños nunca terminan sexto grado. En pueblos rurales, la educación promedio dura solo 5.6 años. PupuserIA existe para cambiar ese número—permanentemente.",
     "missionP2": "Creemos que cuando alineas el comercio con la compasión, no necesitas pedir caridad. Construyes un sistema donde cada reserva, cada inversión y cada remesa financia automáticamente la educación, comidas, dispositivos y conectividad de un niño."
   },
   "coverage": {
@@ -414,5 +414,58 @@
     "desc": "Estamos rastreando datos de propiedades, imágenes e infraestructura en cada municipio de El Salvador. 6 zonas de desierto de datos necesitan investigación de campo.",
     "deserts": "Zonas Desiertas",
     "viewGaps": "Ver Brechas"
+  },
+  "impactDash": {
+    "title": "Impacto y Analíticas",
+    "subtitle": "Rastrea el uso de la plataforma, el impacto de la fundación y cómo cada dólar llega a los niños en todo El Salvador — en tiempo real.",
+    "platformTab": "Plataforma",
+    "impactTab": "Impacto Fundación",
+    "liveLabel": "En vivo",
+    "platformTitle": "Analíticas de Plataforma",
+    "platformDesc": "Métricas de uso en tiempo real de la plataforma PupuserIA.",
+    "activeNow": "Activos Ahora",
+    "todayViews": "Vistas Hoy",
+    "todaySessions": "Sesiones Hoy",
+    "visitors7d": "Visitantes (7d)",
+    "visitors30d": "Visitantes (30d)",
+    "pageViews7d": "Vistas (7d)",
+    "propertyViews": "Vistas de Propiedades",
+    "searches": "Búsquedas",
+    "tourViews": "Vistas de Tours",
+    "conciergeChats": "Chats Concierge",
+    "mapInteractions": "Interacciones Mapa",
+    "avgSession": "Sesión Prom.",
+    "totalListings": "Total Listados",
+    "aiValuations": "Valuaciones IA",
+    "departments": "Departamentos",
+    "engagementTitle": "Engagement (7 días)",
+    "contentTitle": "Contenido y Cobertura",
+    "trafficTrend": "Tendencia de Tráfico (30 días)",
+    "visitors": "Visitantes",
+    "pageViews": "Vistas",
+    "topCountries": "Países Top",
+    "topDepartments": "Departamentos Top",
+    "noDataYet": "Sin datos aún — las analíticas se llenarán cuando los usuarios visiten la plataforma.",
+    "impactTitle": "Impacto de la Fundación",
+    "impactDesc": "17.5% de cada dólar de ingreso neto va directamente a la Fundación. Rastreado on-chain, auditable en tiempo real.",
+    "totalRevenue": "Ingreso Plataforma",
+    "allocated": "Asignación Fundación",
+    "allocationRate": "Tasa de Asignación",
+    "students": "Estudiantes Alcanzados",
+    "meals": "Comidas Servidas",
+    "devices": "Dispositivos Desplegados",
+    "schools": "Escuelas Activas",
+    "solar": "Instalaciones Solares",
+    "supplies": "Kits de Útiles",
+    "efficiency": "Eficiencia de Fondos",
+    "verified": "Verificado en Blockchain",
+    "perChild": "Costo por Niño / Año",
+    "programsTitle": "Por Programa",
+    "impactByDept": "Impacto por Departamento",
+    "monthlyGrowth": "Crecimiento Mensual",
+    "transparencyNote": "Todos los flujos financieros están diseñados para ser verificados on-chain (Bitcoin/Liquid). Contratos inteligentes liberarán fondos a escuelas verificadas, programas de nutrición y proveedores. Los datos de la Fundación estarán en vivo una vez que se genere el primer ingreso.",
+    "preRevenue": "Pre-Ingreso",
+    "preRevenueDesc": "La Fundación se activa automáticamente cuando se genera el primer dólar de ingreso de la plataforma. Actualmente construyendo inventario y marketplace.",
+    "seconds": "segundos"
   }
 }

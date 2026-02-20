@@ -72,3 +72,7 @@ infra/terraform/*.tfvars
 *.pem
 *.key
 *.cert
+
+# Scraper data output (large, regenerable)
+data/scrapers/data/scraper_output/
+data/scrapers/_probe_*.html

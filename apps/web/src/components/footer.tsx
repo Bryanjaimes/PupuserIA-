@@ -26,7 +26,7 @@ export function Footer() {
       { labelKey: "footer.tourExperiences", href: "/marketplace#tours" },
     ],
     foundation: [
-      { labelKey: "footer.impactDashboard", href: "/foundation" },
+      { labelKey: "footer.impactDashboard", href: "/dashboard/impact" },
       { labelKey: "footer.aiTutoring", href: "/foundation#tutoring" },
       { labelKey: "footer.partnerSchools", href: "/foundation#schools" },
       { labelKey: "footer.donate", href: "/foundation#donate" },
@@ -34,18 +34,17 @@ export function Footer() {
   };
 
   return (
-    <footer className="border-t border-gray-200 bg-sv-950">
+    <footer className="border-t border-white/10 bg-sv-950">
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="mb-5 flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-sv-500 text-base text-white">
+              <span className="flex h-9 w-9 items-center justify-center text-2xl">
                 🇸🇻
               </span>
               <div>
-                <span className="text-lg font-bold text-white">Gateway</span>
-                <span className="ml-1 text-lg font-bold text-gold-400">ES</span>
+                <span className="text-lg font-bold text-white">Pupuser</span><span className="text-lg font-bold text-gold-400">IA</span>
               </div>
             </div>
             <p className="mb-6 max-w-sm text-sm leading-relaxed text-white/40">

@@ -190,3 +190,90 @@ export interface Department {
   lat: number;
   lng: number;
 }
+
+// ── Analytics Types ─────────────────────────────────
+
+export interface AnalyticsEvent {
+  sessionId: string;
+  eventType: AnalyticsEventType;
+  pagePath?: string;
+  referrer?: string;
+  properties?: Record<string, unknown>;
+  deviceType?: "desktop" | "mobile" | "tablet";
+  browser?: string;
+  os?: string;
+  language?: string;
+}
+
+export type AnalyticsEventType =
+  | "page_view"
+  | "property_view"
+  | "property_search"
+  | "map_interaction"
+  | "tour_view"
+  | "concierge_chat"
+  | "foundation_click"
+  | "share"
+  | "signup"
+  | "booking_start"
+  | "booking_complete";
+
+export interface PlatformOverview {
+  activeVisitorsNow: number;
+  pageViewsToday: number;
+  sessionsToday: number;
+  visitors7d: number;
+  visitors30d: number;
+  pageViews7d: number;
+  pageViews30d: number;
+  propertyViews7d: number;
+  propertySearches7d: number;
+  tourViews7d: number;
+  conciergeChats7d: number;
+  mapInteractions7d: number;
+  avgSessionDurationSec: number;
+  totalListings: number;
+  listingsWithValuation: number;
+  departmentsCovered: number;
+  topCountries: Record<string, number>;
+  topDepartments: Record<string, number>;
+  dailyVisitors: DailyDataPoint[];
+  dailyPageViews: DailyDataPoint[];
+}
+
+export interface DailyDataPoint {
+  date: string;
+  value: number;
+}
+
+export interface ImpactDashboard {
+  totalPlatformRevenueUsd: number;
+  foundationAllocationUsd: number;
+  allocationRate: number;
+  studentsReached: number;
+  mealsServed: number;
+  devicesDeployed: number;
+  schoolsActive: number;
+  solarInstallations: number;
+  supplyKits: number;
+  childrenPerDollar: number;
+  programBreakdown: ProgramBreakdownItem[];
+  blockchainVerifiedCount: number;
+  fundEfficiencyPct: number;
+  monthlyImpact: MonthlyImpactPoint[];
+  impactByDepartment: Record<string, number>;
+}
+
+export interface ProgramBreakdownItem {
+  program: string;
+  emoji: string;
+  allocatedUsd: number;
+  [key: string]: unknown;
+}
+
+export interface MonthlyImpactPoint {
+  month: string;
+  revenueUsd: number;
+  allocationUsd: number;
+  studentsReached: number;
+}

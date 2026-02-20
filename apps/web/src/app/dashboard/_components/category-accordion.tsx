@@ -37,7 +37,7 @@ export function CategoryAccordion({
         const isExpanded = expandedSections.has(section.id);
 
         return (
-          <section key={section.id} id={`section-${section.id}`} className="border-b border-gray-200">
+          <section key={section.id} id={`section-${section.id}`} className="border-b border-white/10">
             <div className="mx-auto max-w-7xl px-6">
               {showParent && (
                 <div className="pb-2 pt-12 lg:pt-16">
@@ -45,11 +45,11 @@ export function CategoryAccordion({
                 </div>
               )}
               <button onClick={() => toggleSection(section.id)}
-                className="flex w-full items-center justify-between py-5 text-left transition-colors hover:text-sv-600">
+                className="flex w-full items-center justify-between py-5 text-left transition-colors hover:text-sv-400">
                 <div className="flex items-center gap-3">
                   <span className="text-xl">{section.icon}</span>
                   <div>
-                    <h3 className="text-lg font-bold text-sv-950">{section.title}</h3>
+                    <h3 className="text-lg font-bold text-white">{section.title}</h3>
                     <div className="flex items-center gap-2 text-[10px] text-gray-400">
                       {filteredLive.length > 0 && <span className="flex items-center gap-1 rounded bg-emerald-50 px-1.5 py-0.5 font-mono text-emerald-600"><span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />{filteredLive.length} {t("dash.live")}</span>}
                       {filteredStatic.length > 0 && <span className="rounded bg-amber-50 px-1.5 py-0.5 font-mono text-amber-600">{filteredStatic.length} {t("dash.hardcoded").toLowerCase()}</span>}

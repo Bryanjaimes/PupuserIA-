@@ -13,7 +13,7 @@ export function CoverageGapBanner() {
   return (
     <section className="py-12 bg-gradient-to-r from-red-50 via-orange-50 to-yellow-50">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 rounded-2xl border border-red-200 bg-white p-8 shadow-sm">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 rounded-2xl border border-red-200 bg-[#0a0a0a] p-8 shadow-sm">
           {/* Left */}
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
@@ -24,7 +24,7 @@ export function CoverageGapBanner() {
                 {t("coverage.high")}: 46
               </span>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-1">
+            <h3 className="text-xl font-bold text-white/90 mb-1">
               {t("coverageBanner.title")}
             </h3>
             <p className="text-gray-600 text-sm max-w-xl">
@@ -35,15 +35,15 @@ export function CoverageGapBanner() {
           {/* Stats */}
           <div className="flex items-center gap-6 text-center">
             <div>
-              <div className="text-3xl font-bold text-gray-900">262</div>
+              <div className="text-3xl font-bold text-white/90">262</div>
               <div className="text-xs text-gray-500">{t("coverage.municipios")}</div>
             </div>
-            <div className="h-10 w-px bg-gray-200" />
+            <div className="h-10 w-px bg-[#222]" />
             <div>
               <div className="text-3xl font-bold text-red-600">0%</div>
               <div className="text-xs text-gray-500">{t("coverage.score")}</div>
             </div>
-            <div className="h-10 w-px bg-gray-200" />
+            <div className="h-10 w-px bg-[#222]" />
             <div>
               <div className="text-3xl font-bold text-orange-600">6</div>
               <div className="text-xs text-gray-500">{t("coverageBanner.deserts")}</div>

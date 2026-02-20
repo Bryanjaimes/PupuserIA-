@@ -76,7 +76,7 @@ export default function DashboardPage() {
   const totalMetrics = totalLive + totalStatic;
 
   return (
-    <main className="min-h-screen bg-white pt-28">
+    <main className="min-h-screen bg-[#0a0a0a] pt-28">
       <DashboardHero
         totalMetrics={totalMetrics}
         totalLive={totalLive}

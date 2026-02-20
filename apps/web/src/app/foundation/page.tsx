@@ -29,15 +29,15 @@ export default function FoundationPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-white pt-20">
+    <main className="min-h-screen bg-[#0a0a0a] pt-20">
       {/* ── Hero / Mission ── */}
-      <section className="relative overflow-hidden border-b border-gray-100 bg-[#f8f9fc] py-24 lg:py-32">
+      <section className="relative overflow-hidden border-b border-white/5 bg-[#0d0d0d] py-24 lg:py-32">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded border border-impact-500/20 bg-impact-500/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-impact-600">
             <Heart size={12} />
             {t("foundation.impact")}
           </div>
-          <h1 className="mb-6 font-serif text-5xl font-black tracking-tight text-sv-950 md:text-6xl lg:text-7xl">
+          <h1 className="mb-6 font-serif text-5xl font-black tracking-tight text-white md:text-6xl lg:text-7xl">
             {t("foundation.title")}
           </h1>
           <p className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-500">
@@ -47,7 +47,7 @@ export default function FoundationPage() {
       </section>
 
       {/* ── Impact Counters ── */}
-      <section className="border-b border-gray-200 bg-sv-950">
+      <section className="border-b border-white/10 bg-sv-950">
         <div className="mx-auto grid max-w-5xl grid-cols-2 divide-x divide-white/10 md:grid-cols-4">
           {counters.map((stat) => (
             <div key={stat.labelKey} className="px-4 py-8 text-center">
@@ -64,11 +64,11 @@ export default function FoundationPage() {
         <div className="pointer-events-none absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none' stroke='%230047ab' stroke-width='0.5'/%3E%3C/svg%3E\")" }} />
         <div className="relative z-10 mx-auto max-w-5xl px-6">
           <div className="mb-6 text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded border border-sv-200 bg-sv-50 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sv-500">
+            <div className="mb-4 inline-flex items-center gap-2 rounded border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-sv-500">
               <Shield size={12} />
               {t("eq.formulaLabel")}
             </div>
-            <h2 className="mb-3 font-serif text-4xl font-bold text-sv-950 md:text-5xl">
+            <h2 className="mb-3 font-serif text-4xl font-bold text-white md:text-5xl">
               {t("eq.title1")}<br /><span className="text-impact-500">{t("eq.title2")}</span>
             </h2>
             <p className="mx-auto max-w-lg text-gray-400">
@@ -77,8 +77,8 @@ export default function FoundationPage() {
           </div>
 
           {/* Large Equation */}
-          <div className="mx-auto mb-14 max-w-3xl rounded-2xl border-2 border-sv-200 bg-gradient-to-br from-sv-50/80 to-white p-8 text-center shadow-lg md:p-12">
-            <div className="equation-hero text-sv-950">
+          <div className="mx-auto mb-14 max-w-3xl rounded-2xl border-2 border-white/10 bg-gradient-to-br from-sv-50/80 to-white p-8 text-center shadow-lg md:p-12">
+            <div className="equation-hero text-white">
               <span className="text-impact-500">F</span>{" "}
               <span className="text-gray-300">=</span>{" "}
               <span className="text-sv-500">O</span>{" "}
@@ -92,7 +92,7 @@ export default function FoundationPage() {
               <span className="text-gold-500">e</span>
             </div>
             <div className="mt-4 text-base font-medium text-gray-400">
-              <span className="font-bold text-impact-600">F</span> = {t("eq.F")} &nbsp;·&nbsp; <span className="font-bold text-sv-700">{t("eq.perChild")}</span>: $250/yr
+              <span className="font-bold text-impact-600">F</span> = {t("eq.F")} &nbsp;·&nbsp; <span className="font-bold text-white/60">{t("eq.perChild")}</span>: $250/yr
             </div>
           </div>
 
@@ -100,9 +100,9 @@ export default function FoundationPage() {
           <div className="mb-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <div className="equation-card">
               <div className="mb-3 flex items-center gap-3">
-                <div className="equation-variable bg-sv-100 text-sv-600">O</div>
+                <div className="equation-variable bg-white/10 text-sv-400">O</div>
                 <div>
-                  <div className="text-sm font-bold text-sv-900">$13.6B</div>
+                  <div className="text-sm font-bold text-white/90">$13.6B</div>
                   <div className="text-xs text-gray-400">{t("eq.O.label")}</div>
                 </div>
               </div>
@@ -110,9 +110,9 @@ export default function FoundationPage() {
             </div>
             <div className="equation-card">
               <div className="mb-3 flex items-center gap-3">
-                <div className="equation-variable bg-sv-100 text-sv-600">m</div>
+                <div className="equation-variable bg-white/10 text-sv-400">m</div>
                 <div>
-                  <div className="text-sm font-bold text-sv-900">0.5% → 3%+</div>
+                  <div className="text-sm font-bold text-white/90">0.5% → 3%+</div>
                   <div className="text-xs text-gray-400">{t("eq.m.label")}</div>
                 </div>
               </div>
@@ -120,9 +120,9 @@ export default function FoundationPage() {
             </div>
             <div className="equation-card">
               <div className="mb-3 flex items-center gap-3">
-                <div className="equation-variable bg-sv-100 text-sv-600">f</div>
+                <div className="equation-variable bg-white/10 text-sv-400">f</div>
                 <div>
-                  <div className="text-sm font-bold text-sv-900">12%</div>
+                  <div className="text-sm font-bold text-white/90">12%</div>
                   <div className="text-xs text-gray-400">{t("eq.f.label")}</div>
                 </div>
               </div>
@@ -130,9 +130,9 @@ export default function FoundationPage() {
             </div>
             <div className="equation-card">
               <div className="mb-3 flex items-center gap-3">
-                <div className="equation-variable bg-gold-100 text-gold-600">α</div>
+                <div className="equation-variable bg-gold-100 text-gold-400">α</div>
                 <div>
-                  <div className="text-sm font-bold text-sv-900">17.5%</div>
+                  <div className="text-sm font-bold text-white/90">17.5%</div>
                   <div className="text-xs text-gray-400">{t("eq.alpha.label")}</div>
                 </div>
               </div>
@@ -140,9 +140,9 @@ export default function FoundationPage() {
             </div>
             <div className="equation-card">
               <div className="mb-3 flex items-center gap-3">
-                <div className="equation-variable bg-gold-100 text-gold-600">e</div>
+                <div className="equation-variable bg-gold-100 text-gold-400">e</div>
                 <div>
-                  <div className="text-sm font-bold text-sv-900">92%</div>
+                  <div className="text-sm font-bold text-white/90">92%</div>
                   <div className="text-xs text-gray-400">{t("eq.e.label")}</div>
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default function FoundationPage() {
                   <Heart size={16} />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-sv-900">$250/yr</div>
+                  <div className="text-sm font-bold text-white/90">$250/yr</div>
                   <div className="text-xs text-gray-400">{t("eq.perChild")}</div>
                 </div>
               </div>
@@ -165,7 +165,7 @@ export default function FoundationPage() {
           {/* Sensitivity Table */}
           <div className="mx-auto mb-14 max-w-2xl">
             <div className="mb-4 text-center">
-              <h3 className="text-lg font-bold text-sv-950">{t("eq.tableTitle")}</h3>
+              <h3 className="text-lg font-bold text-white">{t("eq.tableTitle")}</h3>
               <p className="text-sm text-gray-400">{t("eq.tableSubtitle")}</p>
             </div>
             <table className="sensitivity-table">
@@ -195,17 +195,17 @@ export default function FoundationPage() {
 
           {/* Bridge + Effects */}
           <div className="mx-auto grid max-w-3xl gap-5 md:grid-cols-2">
-            <div className="rounded-xl border border-sv-200 bg-sv-50/50 p-6">
+            <div className="rounded-xl border border-white/10 bg-white/5/50 p-6">
               <div className="mb-2 flex items-center gap-2">
                 <Zap size={16} className="text-sv-500" />
-                <h4 className="text-sm font-bold text-sv-900">{t("eq.bridgeTitle")}</h4>
+                <h4 className="text-sm font-bold text-white/90">{t("eq.bridgeTitle")}</h4>
               </div>
               <p className="text-sm leading-relaxed text-gray-500">{t("eq.bridgeDesc")}</p>
             </div>
             <div className="rounded-xl border border-impact-200 bg-impact-500/[0.03] p-6">
               <div className="mb-2 flex items-center gap-2">
                 <Heart size={16} className="text-impact-500" />
-                <h4 className="text-sm font-bold text-sv-900">{t("eq.effectsTitle")}</h4>
+                <h4 className="text-sm font-bold text-white/90">{t("eq.effectsTitle")}</h4>
               </div>
               <p className="text-sm leading-relaxed text-gray-500">{t("eq.effectsDesc")}</p>
             </div>
@@ -218,9 +218,9 @@ export default function FoundationPage() {
       </section>
 
       {/* ── Our Belief ── */}
-      <section className="border-b border-gray-100 bg-white py-24 lg:py-32">
+      <section className="border-b border-white/5 bg-[#0a0a0a] py-24 lg:py-32">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <h2 className="mb-6 font-serif text-4xl font-bold text-sv-950 md:text-5xl">
+          <h2 className="mb-6 font-serif text-4xl font-bold text-white md:text-5xl">
             {t("foundation.missionTitle")}
           </h2>
           <div className="space-y-6">
@@ -231,9 +231,9 @@ export default function FoundationPage() {
       </section>
 
       {/* ── Programs ── */}
-      <section className="border-t border-gray-100 bg-[#f8f9fc] py-24 lg:py-32">
+      <section className="border-t border-white/5 bg-[#0d0d0d] py-24 lg:py-32">
         <div className="mx-auto max-w-5xl px-6">
-          <h2 className="mb-3 text-center font-serif text-4xl font-bold text-sv-950 md:text-5xl">
+          <h2 className="mb-3 text-center font-serif text-4xl font-bold text-white md:text-5xl">
             {t("foundation.programsTitle")}
           </h2>
           <p className="mx-auto mb-14 max-w-md text-center text-gray-400">
@@ -245,7 +245,7 @@ export default function FoundationPage() {
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-impact-400/20 to-impact-500/10 text-xl">
                   {card.emoji}
                 </div>
-                <h3 className="mb-2 text-base font-bold text-sv-900">{t(card.titleKey)}</h3>
+                <h3 className="mb-2 text-base font-bold text-white/90">{t(card.titleKey)}</h3>
                 <p className="text-sm leading-relaxed text-gray-400">{t(card.descKey)}</p>
                 <div className="mt-4 inline-flex items-center rounded-full bg-impact-500/10 px-3 py-1 text-xs font-medium text-impact-600">
                   {t("foundation.launchingSoon")}
@@ -257,9 +257,9 @@ export default function FoundationPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="bg-white py-24 lg:py-32">
+      <section className="bg-[#0a0a0a] py-24 lg:py-32">
         <div className="mx-auto max-w-2xl px-6 text-center">
-          <h2 className="mb-4 font-serif text-4xl font-bold text-sv-950 md:text-5xl">
+          <h2 className="mb-4 font-serif text-4xl font-bold text-white md:text-5xl">
             {t("foundation.ctaTitle")}
           </h2>
           <p className="mx-auto mb-8 max-w-md text-gray-400">
@@ -269,7 +269,7 @@ export default function FoundationPage() {
             <Link href="/explore" className="group flex items-center gap-2 rounded-md bg-sv-500 px-8 py-4 text-sm font-semibold text-white transition-all hover:bg-sv-600">
               {t("foundation.startExploring")} <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </Link>
-            <Link href="/invest" className="flex items-center gap-2 rounded-md border border-gray-200 bg-white px-8 py-4 text-sm font-semibold text-sv-900 transition-all hover:border-gray-300 hover:bg-gray-50">
+            <Link href="/invest" className="flex items-center gap-2 rounded-md border border-white/10 bg-[#0a0a0a] px-8 py-4 text-sm font-semibold text-white/90 transition-all hover:border-gray-300 hover:bg-white/5">
               {t("foundation.investNow")}
             </Link>
           </div>

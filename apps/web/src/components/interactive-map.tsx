@@ -235,7 +235,7 @@ export default function InteractiveMap() {
                     ★ {place.rating}
                   </span>
                 </div>
-                <h3 className="text-sm font-bold text-gray-900">
+                <h3 className="text-sm font-bold text-white/90">
                   {place.name}
                 </h3>
                 <p className="mt-1 text-xs text-gray-500 leading-relaxed">
@@ -289,7 +289,7 @@ export default function InteractiveMap() {
               onClick={() => setActiveCategory(null)}
               className={`rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-lg backdrop-blur-md transition ${
                 !activeCategory
-                  ? "bg-white text-sv-900"
+                  ? "bg-[#0a0a0a] text-white/90"
                   : "bg-white/15 text-white hover:bg-white/25"
               }`}
             >
@@ -303,7 +303,7 @@ export default function InteractiveMap() {
                 }
                 className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-lg backdrop-blur-md transition ${
                   activeCategory === key
-                    ? "bg-white text-sv-900"
+                    ? "bg-[#0a0a0a] text-white/90"
                     : "bg-white/15 text-white hover:bg-white/25"
                 }`}
               >
@@ -489,7 +489,7 @@ export default function InteractiveMap() {
                   href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${selectedPlace.coordinates[1]},${selectedPlace.coordinates[0]}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 py-2.5 text-xs font-bold text-sv-950 transition hover:bg-gold-400"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gold-500/100 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-gold-400"
                 >
                   <Globe className="h-3.5 w-3.5" />
                   Street View

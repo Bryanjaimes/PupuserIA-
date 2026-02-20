@@ -340,3 +340,82 @@ class ImpactTransaction(Base):
     blockchain_network = Column(String(50))  # stellar, polygon
     description = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# ── Analytics Models ─────────────────────────────────
+
+
+class AnalyticsEvent(Base):
+    """
+    A single tracked event (page view, property click, search, etc.).
+    Lightweight, append-only — no PII stored.
+    """
+
+    __tablename__ = "analytics_events"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    session_id = Column(String(64), nullable=False, index=True)
+    event_type = Column(String(50), nullable=False, index=True)
+    # e.g. "page_view", "property_view", "search", "map_interaction",
+    #      "tour_view", "concierge_chat", "foundation_click", "share"
+    page_path = Column(String(500))
+    referrer = Column(String(500))
+    # Flexible payload for event-specific data  (property_id, search_query, etc.)
+    properties = Column(JSONB, default=dict)
+    # Geo (coarse, from IP — no exact location)
+    country = Column(String(2))
+    region = Column(String(100))
+    # Device
+    device_type = Column(String(20))  # desktop, mobile, tablet
+    browser = Column(String(50))
+    os = Column(String(50))
+    language = Column(String(10))  # en, es
+    # Timestamp
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+    __table_args__ = (
+        Index("ix_events_type_created", "event_type", "created_at"),
+        Index("ix_events_session_created", "session_id", "created_at"),
+    )
+
+
+class DailyMetricsSnapshot(Base):
+    """
+    Pre-aggregated daily metrics for fast dashboard queries.
+    One row per day, updated by a periodic job.
+    """
+
+    __tablename__ = "daily_metrics"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    date = Column(DateTime, nullable=False, unique=True, index=True)
+
+    # Traffic
+    unique_visitors = Column(Integer, default=0)
+    total_page_views = Column(Integer, default=0)
+    total_sessions = Column(Integer, default=0)
+
+    # Engagement
+    property_views = Column(Integer, default=0)
+    property_searches = Column(Integer, default=0)
+    map_interactions = Column(Integer, default=0)
+    tour_views = Column(Integer, default=0)
+    concierge_chats = Column(Integer, default=0)
+    avg_session_duration_sec = Column(Float, default=0)
+
+    # Geographic breakdown (JSONB: {"US": 120, "SV": 80, ...})
+    visitors_by_country = Column(JSONB, default=dict)
+    visitors_by_department = Column(JSONB, default=dict)
+
+    # Content
+    listings_total = Column(Integer, default=0)
+    listings_with_ai_valuation = Column(Integer, default=0)
+
+    # Foundation impact (running totals as of this date)
+    foundation_total_usd = Column(Float, default=0)
+    students_reached = Column(Integer, default=0)
+    meals_served = Column(Integer, default=0)
+    devices_deployed = Column(Integer, default=0)
+    schools_active = Column(Integer, default=0)
+
+    created_at = Column(DateTime, default=datetime.utcnow)

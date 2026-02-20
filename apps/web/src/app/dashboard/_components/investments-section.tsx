@@ -7,26 +7,26 @@ export function InvestmentsSection() {
   const t = useTranslations();
 
   return (
-    <section className="border-b border-gray-200 bg-[#f8f9fc] py-12 lg:py-16" id="investments">
+    <section className="border-b border-white/10 bg-[#0d0d0d] py-12 lg:py-16" id="investments">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-8 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-gold-200 bg-gold-50 text-gold-600"><BarChart3 className="h-5 w-5" /></div>
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-gold-200 bg-gold-500/10 text-gold-400"><BarChart3 className="h-5 w-5" /></div>
           <div>
-            <h2 className="font-serif text-2xl font-extrabold text-sv-950">{t("dash.investmentsTitle")}</h2>
+            <h2 className="font-serif text-2xl font-extrabold text-white">{t("dash.investmentsTitle")}</h2>
             <p className="text-xs text-gray-400">{t("dash.investmentsDesc")}</p>
           </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           {INVESTMENTS.map((inv) => (
-            <div key={inv.title} className="group rounded-lg border border-gray-200 bg-white p-6 transition-all hover:shadow-md">
+            <div key={inv.title} className="group rounded-lg border border-white/10 bg-[#0a0a0a] p-6 transition-all hover:shadow-md">
               <div className="mb-4 flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-gray-50 text-gray-600">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-[#111] text-gray-600">
                     {ICON_MAP[inv.iconName] ?? <Building2 className="h-5 w-5" />}
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-sv-950">{inv.title}</h3>
+                    <h3 className="text-base font-bold text-white">{inv.title}</h3>
                     <div className="text-[11px] text-gray-400">{inv.partner}</div>
                   </div>
                 </div>

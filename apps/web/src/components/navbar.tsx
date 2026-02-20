@@ -29,12 +29,12 @@ export function Navbar() {
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-gray-200 bg-white shadow-sm"
-          : "bg-white/95 backdrop-blur-sm"
+          ? "border-b border-white/10 bg-[#0a0a0a] shadow-sm"
+          : "bg-black/95 backdrop-blur-sm"
       }`}
     >
       {/* Top gov bar */}
-      <div className="border-b border-gray-100 bg-sv-950">
+      <div className="border-b border-white/5 bg-sv-950">
         <div className="mx-auto flex max-w-7xl items-center px-6 py-1.5">
           <span className="text-[11px] font-medium tracking-wide text-white/60">
             🇸🇻 {t("nav.govBar")}
@@ -45,12 +45,11 @@ export function Navbar() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-sv-500 text-base text-white">
+          <span className="flex h-9 w-9 items-center justify-center text-2xl">
             🇸🇻
           </span>
           <div>
-            <span className="text-lg font-bold tracking-tight text-sv-900">Gateway</span>
-            <span className="ml-1 text-lg font-bold text-gold-500">ES</span>
+            <span className="text-lg font-bold tracking-tight text-white/90">Pupuser</span><span className="text-lg font-bold text-gold-500">IA</span>
           </div>
         </Link>
 
@@ -60,7 +59,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-md px-3.5 py-2 text-sm font-medium text-sv-700 transition-colors hover:bg-sv-50 hover:text-sv-500"
+              className="rounded-md px-3.5 py-2 text-sm font-medium text-white/60 transition-colors hover:bg-white/5 hover:text-gold-400"
             >
               {t(link.labelKey)}
             </Link>
@@ -69,7 +68,7 @@ export function Navbar() {
 
         {/* CTA */}
         <div className="hidden items-center gap-3 md:flex">
-          <div className="flex items-center gap-1.5 rounded-md border border-gold-400/30 bg-gold-50 px-3 py-1.5 text-xs font-semibold text-gold-600">
+          <div className="flex items-center gap-1.5 rounded-md border border-gold-400/30 bg-gold-500/10 px-3 py-1.5 text-xs font-semibold text-gold-400">
             <Bitcoin size={13} />
             <span>{t("nav.btcReady")}</span>
           </div>
@@ -84,7 +83,7 @@ export function Navbar() {
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="rounded-md p-2 text-sv-700 transition hover:bg-sv-50 md:hidden"
+          className="rounded-md p-2 text-white/60 transition hover:bg-white/5 md:hidden"
           aria-label="Toggle menu"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
@@ -97,21 +96,21 @@ export function Navbar() {
           open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="border-t border-gray-100 bg-white px-6 py-4">
+        <div className="border-t border-white/5 bg-[#0a0a0a] px-6 py-4">
           <div className="space-y-1">
             {navLinkKeys.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-md px-3.5 py-2.5 text-sm font-medium text-sv-700 transition-colors hover:bg-sv-50 hover:text-sv-500"
+                className="block rounded-md px-3.5 py-2.5 text-sm font-medium text-white/60 transition-colors hover:bg-white/5 hover:text-gold-400"
               >
                 {t(link.labelKey)}
               </Link>
             ))}
           </div>
           <div className="mt-4 flex flex-col gap-2">
-            <div className="flex items-center justify-center gap-1.5 rounded-md border border-gold-400/30 bg-gold-50 px-3 py-2 text-xs font-semibold text-gold-600">
+            <div className="flex items-center justify-center gap-1.5 rounded-md border border-gold-400/30 bg-gold-500/10 px-3 py-2 text-xs font-semibold text-gold-400">
               <Bitcoin size={13} />
               <span>{t("nav.bitcoinReady")}</span>
             </div>

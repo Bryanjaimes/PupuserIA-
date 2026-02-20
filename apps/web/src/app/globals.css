@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ── Gateway El Salvador — 🇸🇻 .gov Design System ── */
+/* ── PupuserIA — 🇸🇻 .gov Design System ── */
 
 @theme {
   /* Salvadoran Blue — Official cobalt */
@@ -44,7 +44,7 @@ html {
 }
 
 body {
-  @apply bg-white text-sv-950 antialiased;
+  @apply bg-black text-white antialiased;
   font-feature-settings: "cv11", "ss01";
 }
 
@@ -55,7 +55,7 @@ a, button, [role="button"], input[type="submit"] {
 /* ── Selection ───────────────────────────────── */
 
 ::selection {
-  @apply bg-sv-500/20 text-sv-900;
+  @apply bg-sv-500/20 text-white/90;
 }
 
 /* ── .gov Style Utilities ────────────────────── */
@@ -211,16 +211,16 @@ a, button, [role="button"], input[type="submit"] {
 }
 
 .equation-card {
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .equation-card:hover {
-  box-shadow: 0 8px 30px rgba(0, 71, 171, 0.08);
-  border-color: #cbd5e1;
+  box-shadow: 0 8px 30px rgba(0, 71, 171, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
 
@@ -230,11 +230,11 @@ a, button, [role="button"], input[type="submit"] {
   border-spacing: 0;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sensitivity-table thead {
-  background: #0a0f1e;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .sensitivity-table thead th {
@@ -248,7 +248,7 @@ a, button, [role="button"], input[type="submit"] {
 }
 
 .sensitivity-table tbody tr {
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   transition: background 0.15s ease;
 }
 
@@ -257,22 +257,23 @@ a, button, [role="button"], input[type="submit"] {
 }
 
 .sensitivity-table tbody tr:hover {
-  background: #f0f5ff;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .sensitivity-table td {
   padding: 1rem 1.25rem;
   font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .sensitivity-table td:first-child {
   font-weight: 600;
-  color: #0047ab;
+  color: #6ba3e8;
 }
 
 .sensitivity-table td:last-child {
   font-weight: 700;
-  color: #0a0f1e;
+  color: white;
 }
 
 @keyframes countUp {

@@ -4,6 +4,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { LanguageProvider } from "@/context/language-provider";
 import { LanguageToggle } from "@/components/language-toggle";
+import { AnalyticsProvider } from "@/components/analytics-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -21,11 +22,11 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Gateway El Salvador — Discover, Invest, Transform",
-    template: "%s | Gateway El Salvador",
+    default: "PupuserIA — Discover, Invest, Transform",
+    template: "%s | PupuserIA",
   },
   description:
-    "The definitive digital gateway to El Salvador. Explore the country, book experiences, invest in real estate, and fund education for Salvadoran children.",
+    "PupuserIA — the AI-powered platform connecting the world to El Salvador. Explore, invest, and fund education for Salvadoran children.",
   keywords: [
     "El Salvador",
     "tourism",
@@ -42,14 +43,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     alternateLocale: "es_SV",
-    siteName: "Gateway El Salvador",
-    title: "Gateway El Salvador — Discover, Invest, Transform",
+    siteName: "PupuserIA",
+    title: "PupuserIA — Discover, Invest, Transform",
     description:
       "The AI-powered platform connecting the world to El Salvador. Every transaction funds education for children.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gateway El Salvador",
+    title: "PupuserIA",
     description:
       "Discover El Salvador. Invest in its future. Fund education for its children.",
   },
@@ -66,12 +67,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="min-h-screen bg-white font-sans">
+      <body className="min-h-screen bg-black font-sans">
         <LanguageProvider>
-          <Navbar />
-          {children}
-          <Footer />
-          <LanguageToggle />
+          <AnalyticsProvider>
+            <Navbar />
+            {children}
+            <Footer />
+            <LanguageToggle />
+          </AnalyticsProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -35,7 +35,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   /* Restore persisted language */
   useEffect(() => {
-    const saved = localStorage.getItem("gateway-lang") as Locale | null;
+    const saved = localStorage.getItem("pupuseria-lang") as Locale | null;
     if (saved === "en" || saved === "es") setLocaleState(saved);
   }, []);
 
@@ -46,7 +46,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((l: Locale) => {
     setLocaleState(l);
-    localStorage.setItem("gateway-lang", l);
+    localStorage.setItem("pupuseria-lang", l);
   }, []);
 
   return (

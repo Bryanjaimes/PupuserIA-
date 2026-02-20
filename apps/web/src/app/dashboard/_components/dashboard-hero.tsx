@@ -27,7 +27,7 @@ export function DashboardHero({
   return (
     <>
       {/* ═══════════ HERO HEADER ═══════════ */}
-      <div className="border-b border-gray-200 bg-[#f8f9fc]">
+      <div className="border-b border-white/10 bg-[#0d0d0d]">
         <div className="mx-auto max-w-7xl px-6 py-16 lg:py-20">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-2xl">
@@ -35,7 +35,7 @@ export function DashboardHero({
                 <Zap className="h-3 w-3" />
                 {t("dash.liveData")} · {totalMetrics} {t("dash.metrics")}
               </div>
-              <h1 className="mb-3 font-serif text-4xl font-extrabold text-sv-950 md:text-5xl lg:text-6xl">
+              <h1 className="mb-3 font-serif text-4xl font-extrabold text-white md:text-5xl lg:text-6xl">
                 {t("dash.title1")}<br />
                 <span className="text-gold-500">{t("dash.title2")}</span>
               </h1>
@@ -56,8 +56,8 @@ export function DashboardHero({
                 <div className="text-2xl font-extrabold text-amber-700">{totalStatic}</div>
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-amber-600/60">{t("dash.hardcoded")}</div>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-white px-5 py-4 text-center">
-                <div className="text-2xl font-extrabold text-sv-600">7</div>
+              <div className="rounded-lg border border-white/10 bg-[#0a0a0a] px-5 py-4 text-center">
+                <div className="text-2xl font-extrabold text-sv-400">7</div>
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">{t("dash.categories")}</div>
               </div>
             </div>
@@ -73,12 +73,12 @@ export function DashboardHero({
               { label: "IMF", url: "https://www.imf.org/en/Countries/SLV" },
             ].map((src) => (
               <a key={src.label} href={src.url} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-3.5 py-1.5 text-[11px] font-medium text-gray-400 transition-all hover:border-sv-300 hover:text-sv-600">
+                className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-[#0a0a0a] px-3.5 py-1.5 text-[11px] font-medium text-gray-400 transition-all hover:border-sv-300 hover:text-sv-400">
                 {src.label}<ExternalLink className="h-2.5 w-2.5" />
               </a>
             ))}
             <button onClick={wbRefetch}
-              className="ml-auto inline-flex items-center gap-1.5 rounded-md border border-sv-200 bg-sv-50 px-3.5 py-1.5 text-[11px] font-semibold text-sv-600 transition-all hover:bg-sv-100">
+              className="ml-auto inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-3.5 py-1.5 text-[11px] font-semibold text-sv-400 transition-all hover:bg-white/10">
               <RefreshCw className={`h-3 w-3 ${wbLoading ? "animate-spin" : ""}`} /> {t("dash.refresh")}
             </button>
           </div>

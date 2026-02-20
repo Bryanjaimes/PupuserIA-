@@ -13,9 +13,9 @@ export function TimelineSection() {
     <section className="py-12 lg:py-16" id="timeline">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-8 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-sv-200 bg-sv-50 text-sv-600"><Clock className="h-5 w-5" /></div>
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-sv-400"><Clock className="h-5 w-5" /></div>
           <div>
-            <h2 className="font-serif text-2xl font-extrabold text-sv-950">{t("dash.timelineTitle")}</h2>
+            <h2 className="font-serif text-2xl font-extrabold text-white">{t("dash.timelineTitle")}</h2>
             <p className="text-xs text-gray-400">{t("dash.timelineDesc")}</p>
           </div>
         </div>
@@ -23,14 +23,14 @@ export function TimelineSection() {
         {/* Filter buttons */}
         <div className="mb-6 flex flex-wrap gap-2">
           <button onClick={() => setFilter(null)}
-            className={`rounded-md px-4 py-1.5 text-xs font-semibold transition-all ${!filter ? "bg-sv-950 text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}>
+            className={`rounded-md px-4 py-1.5 text-xs font-semibold transition-all ${!filter ? "bg-sv-950 text-white" : "bg-[#1a1a1a] text-gray-500 hover:bg-white/15"}`}>
             {t("dash.all")} ({TIMELINE.length})
           </button>
           {Object.entries(TIMELINE_CAT_COLORS).map(([cat, cls]) => {
             const count = TIMELINE.filter((tl) => tl.category === cat).length;
             return (
               <button key={cat} onClick={() => setFilter(filter === cat ? null : cat)}
-                className={`rounded-md border px-4 py-1.5 text-xs font-semibold capitalize transition-all ${filter === cat ? cls : "border-gray-200 bg-gray-50 text-gray-400 hover:bg-gray-100"}`}>
+                className={`rounded-md border px-4 py-1.5 text-xs font-semibold capitalize transition-all ${filter === cat ? cls : "border-white/10 bg-[#111] text-gray-400 hover:bg-white/10"}`}>
                 {cat} ({count})
               </button>
             );
@@ -39,11 +39,11 @@ export function TimelineSection() {
 
         {/* Timeline */}
         <div className="relative">
-          <div className="absolute bottom-0 left-5 top-0 w-px bg-gray-200" />
+          <div className="absolute bottom-0 left-5 top-0 w-px bg-[#222]" />
           <div className="space-y-1">
             {filtered.map((item, i) => (
               <div key={i} className="group relative flex gap-4 py-3 pl-1">
-                <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-base transition-all group-hover:border-sv-300 group-hover:bg-sv-50">
+                <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-[#0a0a0a] text-base transition-all group-hover:border-sv-300 group-hover:bg-white/5">
                   {item.icon}
                 </div>
                 <div className="min-w-0 flex-1 pt-0.5">
@@ -53,7 +53,7 @@ export function TimelineSection() {
                       {item.category}
                     </span>
                   </div>
-                  <h4 className="text-sm font-bold text-sv-950 transition-colors group-hover:text-sv-600">{item.title}</h4>
+                  <h4 className="text-sm font-bold text-white transition-colors group-hover:text-sv-400">{item.title}</h4>
                   <p className="mt-0.5 text-xs leading-relaxed text-gray-400">{item.desc}</p>
                 </div>
               </div>

@@ -30,18 +30,18 @@ export const ICON_MAP: Record<string, React.ReactNode> = {
 
 export const STATUS_COLORS: Record<string, string> = {
   active: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  approved: "bg-sv-50 text-sv-600 border-sv-200",
+  approved: "bg-white/5 text-sv-400 border-white/10",
   construction: "bg-orange-50 text-orange-700 border-orange-200",
-  executed: "bg-gold-50 text-gold-600 border-gold-200",
-  planned: "bg-gray-50 text-gray-500 border-gray-200",
+  executed: "bg-gold-500/10 text-gold-400 border-gold-200",
+  planned: "bg-[#111] text-gray-500 border-white/10",
 };
 
 export const TIMELINE_CAT_COLORS: Record<string, string> = {
   bitcoin: "text-[#f7931a] bg-orange-50 border-orange-200",
   security: "text-red-600 bg-red-50 border-red-200",
-  infrastructure: "text-sv-600 bg-sv-50 border-sv-200",
+  infrastructure: "text-sv-400 bg-white/5 border-white/10",
   finance: "text-emerald-700 bg-emerald-50 border-emerald-200",
-  governance: "text-gold-600 bg-gold-50 border-gold-200",
+  governance: "text-gold-400 bg-gold-500/10 border-gold-200",
   social: "text-purple-600 bg-purple-50 border-purple-200",
 };
 

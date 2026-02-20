@@ -48,7 +48,7 @@ export function RealtimeFeedsSection() {
   const news = useGdeltNews();
 
   return (
-    <section className="border-b border-gray-200 py-12 lg:py-16" id="realtime-feeds">
+    <section className="border-b border-white/10 py-12 lg:py-16" id="realtime-feeds">
       <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <div className="mb-8 flex items-center gap-3">
@@ -56,7 +56,7 @@ export function RealtimeFeedsSection() {
             <Radio className="h-5 w-5" />
           </div>
           <div>
-            <h2 className="font-serif text-2xl font-extrabold text-sv-950">
+            <h2 className="font-serif text-2xl font-extrabold text-white">
               {t("dash.realtimeTitle")}
             </h2>
             <p className="text-xs text-gray-400">{t("dash.realtimeDesc")}</p>
@@ -73,7 +73,7 @@ export function RealtimeFeedsSection() {
         {/* Grid */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {/* ────── 1. Weather ────── */}
-          <div className="rounded-lg border border-gray-200 bg-white p-6 transition-all hover:shadow-md">
+          <div className="rounded-lg border border-white/10 bg-[#0a0a0a] p-6 transition-all hover:shadow-md">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Cloud className="h-4 w-4 text-sky-500" />
@@ -91,7 +91,7 @@ export function RealtimeFeedsSection() {
             ) : wx.weather ? (
               <>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold text-sv-950">
+                  <span className="text-4xl font-extrabold text-white">
                     {wx.weather.temperature.toFixed(0)}°C
                   </span>
                   <span className="text-2xl">{weatherCodeToEmoji(wx.weather.weatherCode)}</span>
@@ -109,7 +109,7 @@ export function RealtimeFeedsSection() {
           </div>
 
           {/* ────── 2. Air Quality ────── */}
-          <div className="rounded-lg border border-gray-200 bg-white p-6 transition-all hover:shadow-md">
+          <div className="rounded-lg border border-white/10 bg-[#0a0a0a] p-6 transition-all hover:shadow-md">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Wind className="h-4 w-4 text-teal-500" />
@@ -131,7 +131,7 @@ export function RealtimeFeedsSection() {
                   return (
                     <>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-extrabold text-sv-950">{aq.aq.usAqi}</span>
+                        <span className="text-4xl font-extrabold text-white">{aq.aq.usAqi}</span>
                         <span className={`text-sm font-semibold ${color}`}>{label}</span>
                       </div>
                       <p className="mt-1 text-xs text-gray-400">US AQI</p>
@@ -150,7 +150,7 @@ export function RealtimeFeedsSection() {
           </div>
 
           {/* ────── 3. Seismic Activity ────── */}
-          <div className="rounded-lg border border-gray-200 bg-white p-6 transition-all hover:shadow-md">
+          <div className="rounded-lg border border-white/10 bg-[#0a0a0a] p-6 transition-all hover:shadow-md">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Activity className="h-4 w-4 text-red-500" />
@@ -170,7 +170,7 @@ export function RealtimeFeedsSection() {
             ) : (
               <>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold text-sv-950">
+                  <span className="text-4xl font-extrabold text-white">
                     M{eq.quakes[0].magnitude.toFixed(1)}
                   </span>
                   <span className="text-xs text-gray-400">{t("dash.latest")}</span>
@@ -197,7 +197,7 @@ export function RealtimeFeedsSection() {
           </div>
 
           {/* ────── 4. Exchange Rates ────── */}
-          <div className="rounded-lg border border-gray-200 bg-white p-6 transition-all hover:shadow-md">
+          <div className="rounded-lg border border-white/10 bg-[#0a0a0a] p-6 transition-all hover:shadow-md">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <DollarSign className="h-4 w-4 text-emerald-500" />
@@ -228,7 +228,7 @@ export function RealtimeFeedsSection() {
                         <span className="font-medium">{c.code}</span>
                         <span className="text-xs text-gray-400">{c.name}</span>
                       </span>
-                      <span className="font-semibold text-sv-950">{c.rate.toFixed(c.code === "EUR" ? 4 : 2)}</span>
+                      <span className="font-semibold text-white">{c.rate.toFixed(c.code === "EUR" ? 4 : 2)}</span>
                     </div>
                   ))}
                 </div>
@@ -238,7 +238,7 @@ export function RealtimeFeedsSection() {
           </div>
 
           {/* ────── 5. News Feed ────── */}
-          <div className="rounded-lg border border-gray-200 bg-white p-6 transition-all hover:shadow-md sm:col-span-2">
+          <div className="rounded-lg border border-white/10 bg-[#0a0a0a] p-6 transition-all hover:shadow-md sm:col-span-2">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Newspaper className="h-4 w-4 text-indigo-500" />
@@ -265,11 +265,11 @@ export function RealtimeFeedsSection() {
                     href={a.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-start gap-3 rounded-md p-2 transition-colors hover:bg-gray-50"
+                    className="group flex items-start gap-3 rounded-md p-2 transition-colors hover:bg-white/5"
                   >
                     <span className="mt-0.5 text-xs text-gray-300">{String(i + 1).padStart(2, "0")}</span>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-gray-700 group-hover:text-sv-600">
+                      <p className="truncate text-sm font-medium text-white/60 group-hover:text-sv-400">
                         {a.title}
                       </p>
                       <p className="text-[11px] text-gray-400">
@@ -281,7 +281,7 @@ export function RealtimeFeedsSection() {
                         ).toLocaleDateString() : ""}
                       </p>
                     </div>
-                    <ExternalLink className="mt-1 h-3 w-3 flex-shrink-0 text-gray-300 group-hover:text-sv-500" />
+                    <ExternalLink className="mt-1 h-3 w-3 flex-shrink-0 text-gray-300 group-hover:text-gold-400" />
                   </a>
                 ))}
               </div>

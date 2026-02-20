@@ -35,7 +35,7 @@ const PropertyExplorerMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full w-full items-center justify-center bg-sv-100 rounded-2xl">
+      <div className="flex h-full w-full items-center justify-center bg-white/10 rounded-2xl">
         <Loader2 className="h-6 w-6 animate-spin text-sv-300" />
       </div>
     ),
@@ -127,7 +127,7 @@ export default function PropertyDetailPage() {
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-white pt-20">
+      <main className="flex min-h-screen items-center justify-center bg-[#0a0a0a] pt-20">
         <Loader2 className="h-10 w-10 animate-spin text-sv-400" />
       </main>
     );
@@ -135,12 +135,12 @@ export default function PropertyDetailPage() {
 
   if (error || !property) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-white pt-20">
+      <main className="flex min-h-screen items-center justify-center bg-[#0a0a0a] pt-20">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-sv-900">Property not found</h1>
+          <h1 className="text-2xl font-bold text-white/90">Property not found</h1>
           <Link
             href={`/explore/${deptSlug}`}
-            className="mt-4 inline-block text-sm text-gold-600 hover:underline"
+            className="mt-4 inline-block text-sm text-gold-400 hover:underline"
           >
             ← Back to {deptName || "department"}
           </Link>
@@ -182,7 +182,7 @@ export default function PropertyDetailPage() {
             {muniName}
           </Link>
           <ChevronRight className="h-3 w-3 text-sv-300" />
-          <span className="font-medium text-sv-700 truncate max-w-[200px]">
+          <span className="font-medium text-white/60 truncate max-w-[200px]">
             Property
           </span>
         </nav>
@@ -192,7 +192,7 @@ export default function PropertyDetailPage() {
             ═══════════════════════════════════════════ */}
         <div className="mb-8">
           {/* Main Image */}
-          <div className="relative overflow-hidden rounded-2xl bg-sv-100" style={{ height: 420 }}>
+          <div className="relative overflow-hidden rounded-2xl bg-white/10" style={{ height: 420 }}>
             <Image
               src={images[mainImg]}
               alt={property.title}
@@ -211,7 +211,7 @@ export default function PropertyDetailPage() {
                       i === 0 ? images.length - 1 : i - 1,
                     )
                   }
-                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-lg transition hover:bg-white"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/90 p-2 shadow-lg transition hover:bg-[#0a0a0a]"
                   aria-label="Previous"
                 >
                   <ChevronLeft className="h-5 w-5" />
@@ -222,7 +222,7 @@ export default function PropertyDetailPage() {
                       i === images.length - 1 ? 0 : i + 1,
                     )
                   }
-                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-lg transition hover:bg-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/90 p-2 shadow-lg transition hover:bg-[#0a0a0a]"
                   aria-label="Next"
                 >
                   <ChevronRight className="h-5 w-5" />
@@ -235,11 +235,11 @@ export default function PropertyDetailPage() {
             {/* Badges */}
             <div className="absolute left-3 top-3 flex gap-2">
               {property.is_featured && (
-                <span className="flex items-center gap-1 rounded-full bg-gold-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
+                <span className="flex items-center gap-1 rounded-full bg-gold-500/100 px-3 py-1 text-xs font-semibold text-white shadow-lg">
                   <Star className="h-3 w-3" /> Featured
                 </span>
               )}
-              <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-medium capitalize text-sv-800">
+              <span className="rounded-full bg-black/90 px-3 py-1 text-xs font-medium capitalize text-sv-800">
                 {property.property_type}
               </span>
             </div>
@@ -285,13 +285,13 @@ export default function PropertyDetailPage() {
             </div>
 
             {/* Title */}
-            <h1 className="mb-4 text-2xl font-extrabold text-sv-950 md:text-3xl leading-tight">
+            <h1 className="mb-4 text-2xl font-extrabold text-white md:text-3xl leading-tight">
               {property.title}
             </h1>
 
             {/* Price */}
             <div className="mb-6 flex flex-wrap items-baseline gap-3">
-              <span className="text-3xl font-extrabold text-sv-950">
+              <span className="text-3xl font-extrabold text-white">
                 {fmt(property.price_usd)}
               </span>
               {property.ai_valuation_usd != null && (
@@ -305,37 +305,37 @@ export default function PropertyDetailPage() {
             {/* Stats pills */}
             <div className="mb-6 flex flex-wrap gap-3">
               {property.bedrooms != null && (
-                <div className="flex items-center gap-2 rounded-xl border border-sv-200 bg-white px-4 py-2">
+                <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2">
                   <BedDouble className="h-4 w-4 text-sv-500" />
                   <div>
-                    <div className="text-sm font-bold text-sv-900">{property.bedrooms}</div>
+                    <div className="text-sm font-bold text-white/90">{property.bedrooms}</div>
                     <div className="text-[10px] text-sv-500">Bedrooms</div>
                   </div>
                 </div>
               )}
               {property.bathrooms != null && (
-                <div className="flex items-center gap-2 rounded-xl border border-sv-200 bg-white px-4 py-2">
+                <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2">
                   <Bath className="h-4 w-4 text-sv-500" />
                   <div>
-                    <div className="text-sm font-bold text-sv-900">{property.bathrooms}</div>
+                    <div className="text-sm font-bold text-white/90">{property.bathrooms}</div>
                     <div className="text-[10px] text-sv-500">Bathrooms</div>
                   </div>
                 </div>
               )}
               {property.area_m2 != null && (
-                <div className="flex items-center gap-2 rounded-xl border border-sv-200 bg-white px-4 py-2">
+                <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2">
                   <Maximize className="h-4 w-4 text-sv-500" />
                   <div>
-                    <div className="text-sm font-bold text-sv-900">{fmtArea(property.area_m2)}</div>
+                    <div className="text-sm font-bold text-white/90">{fmtArea(property.area_m2)}</div>
                     <div className="text-[10px] text-sv-500">Living Area</div>
                   </div>
                 </div>
               )}
               {property.lot_size_m2 != null && property.lot_size_m2 > 0 && (
-                <div className="flex items-center gap-2 rounded-xl border border-sv-200 bg-white px-4 py-2">
+                <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-2">
                   <Ruler className="h-4 w-4 text-sv-500" />
                   <div>
-                    <div className="text-sm font-bold text-sv-900">{fmtArea(property.lot_size_m2)}</div>
+                    <div className="text-sm font-bold text-white/90">{fmtArea(property.lot_size_m2)}</div>
                     <div className="text-[10px] text-sv-500">Lot Size</div>
                   </div>
                 </div>
@@ -345,18 +345,18 @@ export default function PropertyDetailPage() {
             {/* Description */}
             {property.description && (
               <div className="mb-8">
-                <h2 className="mb-3 text-lg font-bold text-sv-900">Description</h2>
-                <div className="prose prose-sm max-w-none text-sv-700 leading-relaxed whitespace-pre-line">
+                <h2 className="mb-3 text-lg font-bold text-white/90">Description</h2>
+                <div className="prose prose-sm max-w-none text-white/60 leading-relaxed whitespace-pre-line">
                   {property.description}
                 </div>
               </div>
             )}
             {property.description_es && property.description_es !== property.description && (
               <div className="mb-8">
-                <h2 className="mb-3 text-lg font-bold text-sv-900">
+                <h2 className="mb-3 text-lg font-bold text-white/90">
                   Descripción
                 </h2>
-                <div className="prose prose-sm max-w-none text-sv-700 leading-relaxed whitespace-pre-line">
+                <div className="prose prose-sm max-w-none text-white/60 leading-relaxed whitespace-pre-line">
                   {property.description_es}
                 </div>
               </div>
@@ -365,12 +365,12 @@ export default function PropertyDetailPage() {
             {/* Features */}
             {property.features.length > 0 && (
               <div className="mb-8">
-                <h2 className="mb-3 text-lg font-bold text-sv-900">Features</h2>
+                <h2 className="mb-3 text-lg font-bold text-white/90">Features</h2>
                 <div className="flex flex-wrap gap-2">
                   {property.features.map((f) => (
                     <span
                       key={f}
-                      className="flex items-center gap-1.5 rounded-full border border-sv-200 bg-white px-3 py-1.5 text-xs font-medium text-sv-700"
+                      className="flex items-center gap-1.5 rounded-full border border-white/10 bg-[#0a0a0a] px-3 py-1.5 text-xs font-medium text-white/60"
                     >
                       <Tag className="h-3 w-3 text-sv-400" />
                       {featureLabel(f)}
@@ -393,7 +393,7 @@ export default function PropertyDetailPage() {
                   <dt className="flex items-center gap-1.5 text-sv-500">
                     <Home className="h-3.5 w-3.5" /> Type
                   </dt>
-                  <dd className="font-semibold capitalize text-sv-900">
+                  <dd className="font-semibold capitalize text-white/90">
                     {property.property_type}
                   </dd>
                 </div>
@@ -401,7 +401,7 @@ export default function PropertyDetailPage() {
                   <dt className="flex items-center gap-1.5 text-sv-500">
                     <MapPin className="h-3.5 w-3.5" /> Department
                   </dt>
-                  <dd className="font-semibold text-sv-900">
+                  <dd className="font-semibold text-white/90">
                     {property.department}
                   </dd>
                 </div>
@@ -409,30 +409,21 @@ export default function PropertyDetailPage() {
                   <dt className="flex items-center gap-1.5 text-sv-500">
                     <MapPin className="h-3.5 w-3.5" /> Municipality
                   </dt>
-                  <dd className="font-semibold text-sv-900">{muniName}</dd>
+                  <dd className="font-semibold text-white/90">{muniName}</dd>
                 </div>
-                {property.source && (
-                  <div className="flex justify-between">
-                    <dt className="flex items-center gap-1.5 text-sv-500">
-                      <Globe className="h-3.5 w-3.5" /> Source
-                    </dt>
-                    <dd className="font-semibold text-sv-900 capitalize">
-                      {property.source}
-                    </dd>
-                  </div>
-                )}
+                {/* source kept in DB for internal tracking — not shown to users */}
               </dl>
 
               {/* Neighborhood score */}
               {property.neighborhood_score != null && (
-                <div className="mt-5 border-t border-sv-100 pt-4">
+                <div className="mt-5 border-t border-white/10 pt-4">
                   <div className="mb-2 flex items-center justify-between text-sm">
                     <span className="text-sv-500">Neighborhood Score</span>
                     <span className="font-bold text-gold-700">
                       {property.neighborhood_score}/10
                     </span>
                   </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-sv-100">
+                  <div className="h-2 overflow-hidden rounded-full bg-white/10">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-gold-400 to-gold-500"
                       style={{
@@ -446,7 +437,7 @@ export default function PropertyDetailPage() {
 
             {/* Map */}
             {property.latitude !== 0 && property.longitude !== 0 && (
-              <div className="overflow-hidden rounded-2xl border border-sv-200 shadow" style={{ height: 240 }}>
+              <div className="overflow-hidden rounded-2xl border border-white/10 shadow" style={{ height: 240 }}>
                 <PropertyExplorerMap
                   center={[property.latitude, property.longitude]}
                   zoom={14}
@@ -481,7 +472,7 @@ export default function PropertyDetailPage() {
             {/* Back link */}
             <Link
               href={`/explore/${deptSlug}/${muniSlug}`}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-sv-200 bg-white px-5 py-3 text-sm font-semibold text-sv-700 transition hover:bg-sv-50"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#0a0a0a] px-5 py-3 text-sm font-semibold text-white/60 transition hover:bg-white/5"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to {muniName} listings
@@ -491,8 +482,8 @@ export default function PropertyDetailPage() {
 
         {/* ── All Images Section ───────────────── */}
         {images.length > 3 && (
-          <section className="mt-12 border-t border-sv-200 pt-8">
-            <h2 className="mb-4 text-lg font-bold text-sv-900">
+          <section className="mt-12 border-t border-white/10 pt-8">
+            <h2 className="mb-4 text-lg font-bold text-white/90">
               All Photos ({images.length})
             </h2>
             <div className="columns-2 gap-3 sm:columns-3 lg:columns-4">
