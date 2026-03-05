@@ -42,6 +42,7 @@ async def test_properties_search(client: AsyncClient):
 @pytest.mark.asyncio
 async def test_crowd_listing_submit_unverified(client: AsyncClient, tmp_path):
     scraped_data._CROWD_FILE = tmp_path / "crowd_test.jsonl"
+    scraped_data._BROKER_VERIFY_TOKEN = "test-broker-token"
 
     payload = {
         "title": "Casa cerca del centro en Santa Ana",
@@ -76,6 +77,7 @@ async def test_crowd_listing_submit_unverified(client: AsyncClient, tmp_path):
 @pytest.mark.asyncio
 async def test_broker_can_verify_crowd_listing(client: AsyncClient, tmp_path):
     scraped_data._CROWD_FILE = tmp_path / "crowd_test_verify.jsonl"
+    scraped_data._BROKER_VERIFY_TOKEN = "test-broker-token"
 
     submit_payload = {
         "title": "Terreno en Sonsonate",
@@ -91,12 +93,38 @@ async def test_broker_can_verify_crowd_listing(client: AsyncClient, tmp_path):
     verify_response = await client.post(
         f"/api/v1/properties/{listing_id}/verify",
         json={"broker_name": "Broker Marta", "notes": "Visited site and confirmed details."},
+        headers={"x-broker-token": "test-broker-token"},
     )
     assert verify_response.status_code == 200, verify_response.text
     verified = verify_response.json()
     assert verified["verification_status"] == "verified"
     assert verified["is_verified"] is True
     assert verified["verified_by"] == "Broker Marta"
+
+
+@pytest.mark.asyncio
+async def test_broker_verify_requires_token(client: AsyncClient, tmp_path):
+    scraped_data._CROWD_FILE = tmp_path / "crowd_test_unauth.jsonl"
+    scraped_data._BROKER_VERIFY_TOKEN = "test-broker-token"
+
+    submit_response = await client.post(
+        "/api/v1/properties/submit",
+        json={
+            "title": "Casa para verificacion",
+            "property_type": "house",
+            "department": "San Salvador",
+            "municipio": "San Salvador",
+            "submitted_by_name": "Luis",
+        },
+    )
+    assert submit_response.status_code == 201, submit_response.text
+    listing_id = submit_response.json()["id"]
+
+    unauthorized = await client.post(
+        f"/api/v1/properties/{listing_id}/verify",
+        json={"broker_name": "Broker X"},
+    )
+    assert unauthorized.status_code == 401
 
 
 @pytest.mark.asyncio

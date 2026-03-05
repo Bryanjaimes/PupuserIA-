@@ -15,13 +15,14 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 from uuid import uuid4
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, Header, HTTPException, Query, status
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
@@ -39,6 +40,7 @@ _PREFERRED_FILES = [
 ]
 
 _CROWD_FILE = _DATA_DIR / "crowd_listings.jsonl"
+_BROKER_VERIFY_TOKEN = os.getenv("BROKER_VERIFY_TOKEN")
 
 
 def _find_data_file() -> Path | None:
@@ -386,8 +388,21 @@ async def submit_crowd_listing(payload: CrowdListingCreate):
 
 
 @router.post("/{property_id}/verify", response_model=ScrapedPropertyOut)
-async def verify_crowd_listing(property_id: str, payload: VerifyListingRequest):
+async def verify_crowd_listing(
+    property_id: str,
+    payload: VerifyListingRequest,
+    x_broker_token: str | None = Header(default=None),
+):
     """Mark a crowd-submitted listing as broker-verified."""
+    if not _BROKER_VERIFY_TOKEN:
+        raise HTTPException(
+            status_code=503,
+            detail="Broker verification token not configured",
+        )
+
+    if x_broker_token != _BROKER_VERIFY_TOKEN:
+        raise HTTPException(status_code=401, detail="Invalid broker token")
+
     crowd_records = _load_crowd_records()
     if not crowd_records:
         raise HTTPException(status_code=404, detail="No crowd-submitted listings found")
