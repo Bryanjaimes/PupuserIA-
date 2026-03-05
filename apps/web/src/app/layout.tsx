@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer";
 import { LanguageProvider } from "@/context/language-provider";
 import { LanguageToggle } from "@/components/language-toggle";
 import { AnalyticsProvider } from "@/components/analytics-provider";
+import { ViewModeProvider } from "@/context/view-mode";
 import "./globals.css";
 
 const inter = Inter({
@@ -69,12 +70,14 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen bg-black font-sans">
         <LanguageProvider>
-          <AnalyticsProvider>
-            <Navbar />
-            {children}
-            <Footer />
-            <LanguageToggle />
-          </AnalyticsProvider>
+          <ViewModeProvider>
+            <AnalyticsProvider>
+              <Navbar />
+              {children}
+              <Footer />
+              <LanguageToggle />
+            </AnalyticsProvider>
+          </ViewModeProvider>
         </LanguageProvider>
       </body>
     </html>

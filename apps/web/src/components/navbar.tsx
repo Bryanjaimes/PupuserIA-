@@ -2,15 +2,16 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, Bitcoin } from "lucide-react";
+import { Menu, X, Bitcoin, Users, TrendingUp } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useViewMode } from "@/context/view-mode";
 
 const navLinkKeys = [
+  { href: "/buy", labelKey: "nav.buy" },
   { href: "/explore", labelKey: "nav.explore" },
-  { href: "/dashboard", labelKey: "nav.dashboard" },
-  { href: "/marketplace", labelKey: "nav.marketplace" },
   { href: "/invest", labelKey: "nav.invest" },
   { href: "/foundation", labelKey: "nav.foundation" },
+  { href: "/dashboard", labelKey: "nav.dashboard" },
   { href: "/blog", labelKey: "nav.blog" },
 ];
 
@@ -18,6 +19,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const t = useTranslations();
+  const { mode, toggleMode } = useViewMode();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -66,8 +68,32 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* CTA + Mode Toggle */}
         <div className="hidden items-center gap-3 md:flex">
+          {/* Dual-Mode Toggle */}
+          <button
+            onClick={toggleMode}
+            className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium transition-all hover:border-white/20 hover:bg-white/10"
+            title={mode === "family" ? "Switch to Investor & ROI" : "Switch to Family & Impact"}
+          >
+            <span className={`flex items-center gap-1 rounded-full px-2 py-0.5 transition-all ${
+              mode === "family"
+                ? "bg-emerald-500/20 text-emerald-400"
+                : "text-white/40"
+            }`}>
+              <Users size={12} />
+              <span className="hidden lg:inline">Family</span>
+            </span>
+            <span className={`flex items-center gap-1 rounded-full px-2 py-0.5 transition-all ${
+              mode === "investor"
+                ? "bg-gold-500/20 text-gold-400"
+                : "text-white/40"
+            }`}>
+              <TrendingUp size={12} />
+              <span className="hidden lg:inline">Investor</span>
+            </span>
+          </button>
+
           <div className="flex items-center gap-1.5 rounded-md border border-gold-400/30 bg-gold-500/10 px-3 py-1.5 text-xs font-semibold text-gold-400">
             <Bitcoin size={13} />
             <span>{t("nav.btcReady")}</span>
@@ -110,6 +136,19 @@ export function Navbar() {
             ))}
           </div>
           <div className="mt-4 flex flex-col gap-2">
+            {/* Mobile Mode Toggle */}
+            <button
+              onClick={toggleMode}
+              className="flex items-center justify-center gap-3 rounded-md border border-white/10 bg-white/5 px-3 py-2.5 text-sm font-medium"
+            >
+              <span className={`flex items-center gap-1.5 ${mode === "family" ? "text-emerald-400" : "text-white/40"}`}>
+                <Users size={14} /> Family
+              </span>
+              <span className="text-white/20">|</span>
+              <span className={`flex items-center gap-1.5 ${mode === "investor" ? "text-gold-400" : "text-white/40"}`}>
+                <TrendingUp size={14} /> Investor
+              </span>
+            </button>
             <div className="flex items-center justify-center gap-1.5 rounded-md border border-gold-400/30 bg-gold-500/10 px-3 py-2 text-xs font-semibold text-gold-400">
               <Bitcoin size={13} />
               <span>{t("nav.bitcoinReady")}</span>

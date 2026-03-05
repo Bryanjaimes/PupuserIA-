@@ -1,0 +1,79 @@
+name: "Stale Listing Check"
+
+on:
+  schedule:
+    # Every Sunday at 6 AM UTC
+    - cron: "0 6 * * 0"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max listings to check (0 = all)"
+        default: "0"
+        type: string
+
+jobs:
+  check-freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install httpx
+
+      - name: Run stale checker
+        working-directory: data/scrapers
+        run: |
+          python check_stale.py \
+            --limit ${{ github.event.inputs.limit || '0' }} \
+            --workers 10
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: stale-report-${{ github.run_number }}
+          path: data/scrapers/data/scraper_output/_stale_report.txt
+
+      - name: Commit updated freshness data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/scrapers/data/scraper_output/all_listings_freshness.json
+          git diff --cached --quiet || git commit -m "chore: weekly freshness check [skip ci]"
+          git push
+
+  # Optional: Update frontend data if stale listings found
+  update-frontend:
+    needs: check-freshness
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Re-export excluding stale
+        working-directory: data/scrapers
+        run: |
+          python export_to_web.py
+          echo "Frontend data updated"
+
+      - name: Commit updated frontend data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add apps/web/public/data/properties.json
+          git diff --cached --quiet || git commit -m "chore: update frontend data after freshness check [skip ci]"
+          git push

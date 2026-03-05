@@ -22,6 +22,13 @@ This directory contains:
 | Point2 Homes | Aggregator | ~200–400 | ✅ Built |
 | LaVitrina SV | Classifieds | ~200–500 | ✅ Built |
 | CompraVenta SV | Classifieds | ~100–300 | ✅ Built |
+| **Bank Foreclosures** | Foreclosures | ~200–800 | ✅ Built (4 banks) |
+| RE/MAX El Salvador | Brokerage | ~100–300 | ✅ Built |
+| Century 21 El Salvador | Brokerage | ~100–200 | ✅ Built |
+| CityMax El Salvador | Brokerage | ~100–300 | ✅ Built |
+
+> **Bank foreclosures** (Banco Agrícola, Banco Cuscatlán, Banco Promerica, Davivienda) provide
+> appraised prices — the single strongest ground-truth signal for training the valuation model.
 
 ### Running Scrapers
 
@@ -35,8 +42,12 @@ python run.py properstar --max-pages 20
 python run.py point2 --max-pages 15
 python run.py lavitrina --max-pages 20
 python run.py compraventa --max-pages 20
+python run.py bank-foreclosures --max-pages 30
+python run.py remax --max-pages 20
+python run.py century21 --max-pages 20
+python run.py citymax --max-pages 20
 
-# All sources at once
+# All sources at once (all 12 scrapers)
 python run.py all --no-ingest
 
 # Merge & deduplicate all outputs

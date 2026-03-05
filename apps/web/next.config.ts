@@ -21,7 +21,16 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "**.rea.global",
       },
+      {
+        protocol: "https",
+        hostname: "photos.encuentra24.com",
+      },
     ],
+    // Proxy all external images through Next.js for WebP + caching
+    minimumCacheTTL: 86400, // 24h CDN cache
+    formats: ["image/webp", "image/avif"],
+    deviceSizes: [640, 750, 828, 1080, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
   experimental: {

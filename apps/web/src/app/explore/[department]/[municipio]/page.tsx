@@ -123,7 +123,7 @@ function PropertyCard({
                 e.preventDefault();
                 setImgIdx((i) => (i === 0 ? images.length - 1 : i - 1));
               }}
-              className="absolute left-1.5 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 opacity-0 transition group-hover:opacity-100 hover:bg-[#0a0a0a]"
+              className="absolute left-1.5 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-1 text-white opacity-0 transition group-hover:opacity-100 hover:bg-black/80"
               aria-label="Previous"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -133,7 +133,7 @@ function PropertyCard({
                 e.preventDefault();
                 setImgIdx((i) => (i === images.length - 1 ? 0 : i + 1));
               }}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-1 opacity-0 transition group-hover:opacity-100 hover:bg-[#0a0a0a]"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-1 text-white opacity-0 transition group-hover:opacity-100 hover:bg-black/80"
               aria-label="Next"
             >
               <ChevronRight className="h-4 w-4" />
@@ -147,7 +147,7 @@ function PropertyCard({
               <Star className="h-3 w-3" /> Featured
             </span>
           )}
-          <span className="rounded-full bg-black/90 px-2 py-0.5 text-xs font-medium capitalize text-sv-800">
+          <span className="rounded-full bg-black/90 px-2 py-0.5 text-xs font-medium capitalize text-white/70">
             {property.property_type}
           </span>
         </div>
@@ -280,30 +280,30 @@ export default function MunicipalityListingsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white via-sv-50 to-white pt-20 animate-[fadeIn_0.4s_ease-out]">
+    <main className="min-h-screen bg-black pt-20 animate-[fadeIn_0.4s_ease-out]">
       <div className="mx-auto max-w-7xl px-6 py-8">
         {/* ── Breadcrumb ──────────────────────────── */}
-        <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm text-sv-500">
-          <Link href="/explore" className="hover:text-sv-800 transition">
+        <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm text-white/50">
+          <Link href="/explore" className="hover:text-white/80 transition">
             <ArrowLeft className="mr-1 inline h-3.5 w-3.5" />
             Departments
           </Link>
-          <ChevronRight className="h-3 w-3 text-sv-300" />
+          <ChevronRight className="h-3 w-3 text-white/20" />
           <Link
             href={`/explore/${deptSlug}`}
-            className="hover:text-sv-800 transition"
+            className="hover:text-white/80 transition"
           >
             {deptName}
           </Link>
-          <ChevronRight className="h-3 w-3 text-sv-300" />
-          <span className="font-semibold text-sv-800">{muniName}</span>
+          <ChevronRight className="h-3 w-3 text-white/20" />
+          <span className="font-semibold text-white/80">{muniName}</span>
         </nav>
 
         {/* ── Header ──────────────────────────────── */}
         <h1 className="text-3xl font-extrabold text-white md:text-4xl">
           Properties in {muniName}
         </h1>
-        <p className="mt-1 text-base text-sv-500">
+        <p className="mt-1 text-base text-white/40">
           {deptName} Department
           {!loading && ` — ${total} listing${total !== 1 ? "s" : ""}`}
         </p>
@@ -336,7 +336,7 @@ export default function MunicipalityListingsPage() {
               setSortBy(e.target.value as typeof sortBy);
               setPage(1);
             }}
-            className="rounded-xl border border-white/10 bg-[#0a0a0a] px-3 py-2 text-sm text-sv-800 focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-400"
+            className="w-full rounded-xl border border-white/10 bg-[#0a0a0a] px-3 py-2 text-sm text-white/70 focus:border-gold-400 focus:outline-none focus:ring-1 focus:ring-gold-400"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -347,13 +347,13 @@ export default function MunicipalityListingsPage() {
         </div>
 
         {/* ── Results count ────────────────────────── */}
-        <div className="mb-4 text-sm text-sv-500">
+        <div className="mb-4 text-sm text-white/40">
           {loading ? "Loading…" : `${total} properties found`}
         </div>
 
         {/* ── Error ────────────────────────────────── */}
         {error && (
-          <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          <div className="mb-6 rounded-xl border border-red-800/30 bg-red-950/20 p-4 text-sm text-red-400">
             Error: {error}
           </div>
         )}
@@ -375,10 +375,10 @@ export default function MunicipalityListingsPage() {
         ) : properties.length === 0 ? (
           <div className="rounded-2xl border border-white/10 bg-[#0a0a0a] p-12 text-center">
             <Search className="mx-auto mb-3 h-10 w-10 text-sv-300" />
-            <h3 className="mb-1 text-lg font-bold text-sv-800">
+            <h3 className="mb-1 text-lg font-bold text-white/80">
               No properties found
             </h3>
-            <p className="text-sm text-sv-500">
+            <p className="text-sm text-white/40">
               Try changing the filters or check back later.
             </p>
           </div>

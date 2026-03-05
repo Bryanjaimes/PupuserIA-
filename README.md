@@ -87,7 +87,7 @@ PupuserIA/
 | **Frontend** | Next.js 15 (TypeScript), Tailwind CSS v4, Mapbox GL JS, Deck.gl | SSR/ISR content, interactive maps, booking flows |
 | **Backend API** | FastAPI (Python 3.12+), Pydantic v2 | AI inference orchestration, bilingual content, WebSocket chat |
 | **Backend Services** | Go 1.22+ | Payment processing, booking orchestration, real-time pricing |
-| **AI — Valuation** | PyTorch, XGBoost, scikit-learn | Property price estimation in a zero-comps market |
+| **AI — Valuation** | XGBoost, scikit-learn, NumPy | Property price estimation (trained on 12 scraped sources incl. bank foreclosures) |
 | **AI — Concierge** | Claude API, LangChain, Pinecone/Weaviate | RAG chatbot over proprietary ES knowledge base |
 | **AI — Content** | Claude API, custom prompts | Automated SEO content generation (EN/ES) |
 | **AI — Education** | ONNX Runtime, llama.cpp, GGUF models | Offline-first AI tutoring on edge devices |

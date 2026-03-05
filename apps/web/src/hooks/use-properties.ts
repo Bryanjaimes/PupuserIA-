@@ -56,12 +56,14 @@ export interface PropertyStats {
 }
 
 export interface PropertySearchParams {
+  q?: string;
   department?: string;
   municipio?: string;
   min_price?: number;
   max_price?: number;
   property_type?: string;
   bedrooms?: number;
+  bathrooms?: number;
   featured_only?: boolean;
   sort_by?: "newest" | "price_asc" | "price_desc" | "score";
   page?: number;
@@ -81,12 +83,14 @@ export function useProperties(params: PropertySearchParams = {}) {
     setError(null);
     try {
       const searchParams = new URLSearchParams();
+      if (params.q) searchParams.set("q", params.q);
       if (params.department) searchParams.set("department", params.department);
       if (params.municipio) searchParams.set("municipio", params.municipio);
       if (params.min_price !== undefined) searchParams.set("min_price", params.min_price.toString());
       if (params.max_price !== undefined) searchParams.set("max_price", params.max_price.toString());
       if (params.property_type) searchParams.set("property_type", params.property_type);
       if (params.bedrooms !== undefined) searchParams.set("bedrooms", params.bedrooms.toString());
+      if (params.bathrooms !== undefined) searchParams.set("bathrooms", params.bathrooms.toString());
       if (params.featured_only) searchParams.set("featured_only", "true");
       if (params.sort_by) searchParams.set("sort_by", params.sort_by);
       searchParams.set("page", (params.page || 1).toString());
@@ -106,12 +110,14 @@ export function useProperties(params: PropertySearchParams = {}) {
       setLoading(false);
     }
   }, [
+    params.q,
     params.department,
     params.municipio,
     params.min_price,
     params.max_price,
     params.property_type,
     params.bedrooms,
+    params.bathrooms,
     params.featured_only,
     params.sort_by,
     params.page,

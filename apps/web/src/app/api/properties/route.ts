@@ -30,8 +30,13 @@ interface Property {
   features: string[];
   description: string;
   description_es: string;
-  source: string;
-  source_url: string;
+  address: string;
+  listing_date: string | null;
+  seller: string | null;
+  completeness_score: number;
+  quality_tier: string;
+  missing_fields: string[];
+  ad_ready: boolean;
 }
 
 let cachedProperties: Property[] | null = null;
@@ -53,6 +58,7 @@ export async function GET(request: NextRequest) {
   const maxPrice = searchParams.get("max_price");
   const propertyType = searchParams.get("property_type");
   const bedrooms = searchParams.get("bedrooms");
+  const bathrooms = searchParams.get("bathrooms");
   const featuredOnly = searchParams.get("featured_only");
   const sortBy = searchParams.get("sort_by") || "newest";
   const page = parseInt(searchParams.get("page") || "1", 10);
@@ -88,6 +94,10 @@ export async function GET(request: NextRequest) {
   if (bedrooms) {
     const beds = parseInt(bedrooms, 10);
     properties = properties.filter((p) => (p.bedrooms ?? 0) >= beds);
+  }
+  if (bathrooms) {
+    const baths = parseInt(bathrooms, 10);
+    properties = properties.filter((p) => (p.bathrooms ?? 0) >= baths);
   }
   if (featuredOnly === "true") {
     properties = properties.filter((p) => p.is_featured);

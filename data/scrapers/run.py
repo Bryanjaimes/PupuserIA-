@@ -606,6 +606,287 @@ async def run_compraventa(args) -> None:
     logger.info("\nDone!")
 
 
+async def run_bank_foreclosures(args) -> None:
+    """Run all bank foreclosure scrapers."""
+    from bank_foreclosures import (
+        BancoAgricolaScraper, BancoCuscatlanScraper,
+        BancoPromericaScraper, DaviviendaScraper,
+    )
+
+    bank_scrapers = [
+        ("Banco Agrícola", BancoAgricolaScraper),
+        ("Banco Cuscatlán", BancoCuscatlanScraper),
+        ("Banco Promerica", BancoPromericaScraper),
+        ("Davivienda", DaviviendaScraper),
+    ]
+
+    logger.info("=" * 60)
+    logger.info("Bank Foreclosures (Bienes Adjudicados) — El Salvador")
+    logger.info("=" * 60)
+    logger.info(f"  Banks:         {len(bank_scrapers)}")
+    logger.info(f"  Department:    {args.department or 'ALL'}")
+    logger.info(f"  Max pages:     {args.max_pages}")
+    logger.info(f"  Output dir:    {args.output}")
+    logger.info("=" * 60)
+
+    all_properties = []
+
+    for bank_name, scraper_cls in bank_scrapers:
+        logger.info(f"\n{'─' * 40}")
+        logger.info(f"Scraping: {bank_name}")
+        logger.info(f"{'─' * 40}")
+
+        try:
+            scraper = scraper_cls()
+            result = ScrapeResult(
+                source=scraper.source_name,
+                department=args.department,
+                municipio=None,
+                started_at=datetime.utcnow(),
+            )
+
+            async with scraper:
+                async for prop in scraper.scrape_listings(
+                    department=args.department,
+                    max_pages=args.max_pages,
+                    fetch_details=not args.no_details,
+                ):
+                    result.properties.append(prop)
+                    result.total_found += 1
+                    all_properties.append(prop)
+                    if result.total_found % 10 == 0:
+                        logger.info(f"  [{bank_name}] {result.total_found} foreclosures so far...")
+
+            result.finished_at = datetime.utcnow()
+            logger.info(f"  [{bank_name}] Total: {result.total_found} in {result.duration_seconds:.1f}s")
+
+        except Exception as e:
+            logger.error(f"  [{bank_name}] Failed: {e}")
+            continue
+
+    logger.info(f"\nTotal bank foreclosures: {len(all_properties)}")
+
+    # Save combined output
+    if args.output and all_properties:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"bank_foreclosures_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in all_properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to: {filepath}")
+
+    if not args.no_ingest and all_properties:
+        logger.info(f"\nIngesting {len(all_properties)} foreclosures into database...")
+        result = ScrapeResult(
+            source="bank_foreclosures",
+            department=None,
+            municipio=None,
+            started_at=datetime.utcnow(),
+            properties=all_properties,
+            total_found=len(all_properties),
+        )
+        result.finished_at = datetime.utcnow()
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+
+    logger.info("\nDone!")
+
+
+async def run_remax(args) -> None:
+    """Run the RE/MAX El Salvador scraper."""
+    from remax import RemaxScraper
+
+    scraper = RemaxScraper()
+    if args.rate_limit:
+        scraper.requests_per_second = args.rate_limit
+
+    logger.info("=" * 60)
+    logger.info("RE/MAX El Salvador — Property Scraper")
+    logger.info("=" * 60)
+    logger.info(f"  Department:    {args.department or 'ALL'}")
+    logger.info(f"  Max pages:     {args.max_pages}")
+    logger.info(f"  Fetch details: {not args.no_details}")
+    logger.info(f"  Output dir:    {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="remax",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+            max_pages=args.max_pages,
+            fetch_details=not args.no_details,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 25 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"remax_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+    logger.info("\nDone!")
+
+
+async def run_century21(args) -> None:
+    """Run the Century 21 El Salvador scraper."""
+    from century21 import Century21Scraper
+
+    scraper = Century21Scraper()
+    if args.rate_limit:
+        scraper.requests_per_second = args.rate_limit
+
+    logger.info("=" * 60)
+    logger.info("Century 21 El Salvador — Property Scraper")
+    logger.info("=" * 60)
+    logger.info(f"  Department:    {args.department or 'ALL'}")
+    logger.info(f"  Max pages:     {args.max_pages}")
+    logger.info(f"  Fetch details: {not args.no_details}")
+    logger.info(f"  Output dir:    {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="century21",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+            max_pages=args.max_pages,
+            fetch_details=not args.no_details,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 25 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"century21_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+    logger.info("\nDone!")
+
+
+async def run_citymax(args) -> None:
+    """Run the CityMax El Salvador scraper."""
+    from citymax import CityMaxScraper
+
+    scraper = CityMaxScraper()
+    if args.rate_limit:
+        scraper.requests_per_second = args.rate_limit
+
+    logger.info("=" * 60)
+    logger.info("CityMax El Salvador — Property Scraper")
+    logger.info("=" * 60)
+    logger.info(f"  Department:    {args.department or 'ALL'}")
+    logger.info(f"  Max pages:     {args.max_pages}")
+    logger.info(f"  Fetch details: {not args.no_details}")
+    logger.info(f"  Output dir:    {args.output}")
+    logger.info("=" * 60)
+
+    result = ScrapeResult(
+        source="citymax",
+        department=args.department,
+        municipio=None,
+        started_at=datetime.utcnow(),
+    )
+
+    async with scraper:
+        async for prop in scraper.scrape_listings(
+            department=args.department,
+            max_pages=args.max_pages,
+            fetch_details=not args.no_details,
+        ):
+            result.properties.append(prop)
+            result.total_found += 1
+            result.total_new += 1
+            if result.total_found % 25 == 0:
+                logger.info(f"  Collected {result.total_found} properties so far...")
+
+    result.finished_at = datetime.utcnow()
+
+    logger.info(f"\nScraping complete!")
+    logger.info(f"  Total found:  {result.total_found}")
+    logger.info(f"  Duration:     {result.duration_seconds:.1f}s")
+
+    if args.output:
+        output_dir = Path(args.output)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        filepath = output_dir / f"citymax_all_{timestamp}.jsonl"
+        with open(filepath, "w", encoding="utf-8") as f:
+            for prop in result.properties:
+                f.write(json.dumps(prop.to_dict(), ensure_ascii=False) + "\n")
+        logger.info(f"  Saved to:     {filepath}")
+
+    if not args.no_ingest and result.properties:
+        logger.info(f"\nIngesting {len(result.properties)} properties into database...")
+        ingester = PropertyIngester(args.db_url)
+        async with ingester:
+            stats = await ingester.ingest(result)
+            logger.info(f"  Inserted:  {stats['inserted']}")
+            logger.info(f"  Updated:   {stats['updated']}")
+            logger.info(f"  Errors:    {stats['errors']}")
+    logger.info("\nDone!")
+
+
 async def run_all(args) -> None:
     """Run ALL scrapers sequentially and merge results."""
     scrapers_to_run = [
@@ -614,6 +895,10 @@ async def run_all(args) -> None:
         ("point2", run_point2),
         ("lavitrina", run_lavitrina),
         ("compraventa", run_compraventa),
+        ("bank-foreclosures", run_bank_foreclosures),
+        ("remax", run_remax),
+        ("century21", run_century21),
+        ("citymax", run_citymax),
     ]
 
     logger.info("=" * 60)
@@ -852,6 +1137,42 @@ Examples:
     all_parser.add_argument("--rate-limit", type=float, help="Requests per second")
     all_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
 
+    # ── bank-foreclosures ──
+    bank_parser = subparsers.add_parser("bank-foreclosures", help="Scrape bank foreclosures (Bienes Adjudicados)")
+    bank_parser.add_argument("--department", "-d", help="Filter by department name")
+    bank_parser.add_argument("--max-pages", type=int, default=10, help="Max pages per bank")
+    bank_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    bank_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    bank_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    bank_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
+    # ── remax ──
+    remax_parser = subparsers.add_parser("remax", help="Scrape RE/MAX El Salvador")
+    remax_parser.add_argument("--department", "-d", help="Filter by department name")
+    remax_parser.add_argument("--max-pages", type=int, default=20, help="Max listing pages to scrape")
+    remax_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    remax_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    remax_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    remax_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
+    # ── century21 ──
+    c21_parser = subparsers.add_parser("century21", help="Scrape Century 21 El Salvador")
+    c21_parser.add_argument("--department", "-d", help="Filter by department name")
+    c21_parser.add_argument("--max-pages", type=int, default=20, help="Max listing pages to scrape")
+    c21_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    c21_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    c21_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    c21_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
+    # ── citymax ──
+    cm_parser = subparsers.add_parser("citymax", help="Scrape CityMax El Salvador")
+    cm_parser.add_argument("--department", "-d", help="Filter by department name")
+    cm_parser.add_argument("--max-pages", type=int, default=20, help="Max listing pages to scrape")
+    cm_parser.add_argument("--no-details", action="store_true", help="Skip fetching detail pages")
+    cm_parser.add_argument("--no-ingest", action="store_true", help="Don't write to database")
+    cm_parser.add_argument("--rate-limit", type=float, help="Requests per second")
+    cm_parser.add_argument("--output", "-o", default="data/scraper_output", help="Output directory")
+
     # ── stats ──
     subparsers.add_parser("stats", help="Show database statistics")
 
@@ -887,6 +1208,14 @@ Examples:
         asyncio.run(run_compraventa(args))
     elif args.command == "all":
         asyncio.run(run_all(args))
+    elif args.command == "bank-foreclosures":
+        asyncio.run(run_bank_foreclosures(args))
+    elif args.command == "remax":
+        asyncio.run(run_remax(args))
+    elif args.command == "century21":
+        asyncio.run(run_century21(args))
+    elif args.command == "citymax":
+        asyncio.run(run_citymax(args))
     elif args.command == "ingest":
         asyncio.run(run_ingest(args))
     elif args.command == "stats":
